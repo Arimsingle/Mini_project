@@ -1,7 +1,7 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { divIcon } from 'leaflet';
-function MapView(props) {
+const MapView = (props) => {
     const { locationArray } = props
     const iconArray = {
         safe: divIcon({ className: 'marker-icon Safe', iconSize: [20, 20] }),

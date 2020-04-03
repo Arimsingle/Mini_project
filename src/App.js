@@ -2,23 +2,20 @@ import React, { useState, useEffect } from 'react';
 import './scss/App.scss'
 import 'leaflet/dist/leaflet.css'
 import MapView from './components/MapView';
-import axios from 'axios'
 import ListView from './components/ListView';
-
-const api = "https://coronavirus-tracker-api.herokuapp.com/v2/locations"
-
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { apiAction } from './redux/api/action'
 function App() {
-  const [locationArray, setLocationArray] = useState([])
+  const actionApi = bindActionCreators(apiAction, useDispatch())
   useEffect(() => {
-    axios.get(api).then((res) => {
-      setLocationArray(res.data.locations)
-    }).catch((error) => {
-      console.log(error)
-    })
+    actionApi.getAPiCovid();
   }, [])
+  const api = useSelector(state => state.api)
+  const locationArray = api
   return (
     <div>
-      <ListView/>
+      <ListView />
       <MapView
         locationArray={locationArray}
       />
