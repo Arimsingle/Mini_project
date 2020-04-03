@@ -1,10 +1,107 @@
-@import './Vars';
-@import '~bulma/bulma.sass';
-
-// Map view
-
+@import "./Vars";
+@import "~bulma/bulma.sass";
+// MAP
 .map-view {
     width: 100vw;
     height: 100vh;
     z-index: 10;
+}
+.marker-icon {
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 50%;
+    color: red;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 15px;
+}
+// MARKER
+.marker-icon.safe {
+    background-color: #7cbb15;
+    border-color: #70aa13;
+}
+.marker-icon.Yellow {
+    background-color: #ffed00;
+    border-color: #ffcf00;
+}
+.marker-icon.xOrange {
+    background-color: #ff9104;
+    border-color: #fa8208;
+}
+.marker-icon.xxOrange {
+    background-color: #f96f09;
+    border-color: #f14f12;
+}
+.marker-icon.xxxOrange {
+    background-color: #e43c02;
+    border-color: #c42a02;
+}
+.marker-icon.xRed {
+    background-color: #c42a02;
+    border-color: #911b01;
+}
+.marker-icon.xxRed {
+    background-color: #911b01;
+    border-color: #6b1500;
+}
+.marker-icon.xxxRed {
+    background-color: #6b1500;
+    border-color: #5b1200;
+}
+// LISTVIEWS
+.list-view {
+    background-color: $white-ter;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 313px;
+    z-index: 30;
+}
+
+.list-view-brand,
+.list-view-total {
+    background-color: white;
+    border-bottom: 1px solid $grey-lighter;
+    flex-shrink: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+.list-view-locations {
+    border-bottom: 1px solid $grey-lighter;
+    flex-grow: 1;
+    position: relative;
+    overflow-y: auto;
+}
+
+.list-view-location {
+    background-color: white;
+    padding: 20px;
+    cursor: pointer;
+
+    // &:first-child {
+    //     margin-top: 20px;
+    // }
+
+    // &:last-child {
+    //     margin-bottom: 20px;
+    // }
+
+    // &:not(:last-child) {
+    //     border-bottom: 1px solid $grey-lighter;
+    // }
+
+    // &:hover {
+    //     background-color: #eeeeee;
+    // }
+
+    // &.selected {
+    //     color: white;
+    //     background-color: $black-ter;
+    // }
+
+    // &.selected .title {
+    //     color: white;
+    // }
 }
