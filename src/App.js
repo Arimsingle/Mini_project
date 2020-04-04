@@ -9,6 +9,7 @@ import { apiAction } from './redux/api/action'
 import DetailsView from './components/DetailsView';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import Axios from 'axios'
 import Chart from './components/Chart';
 function App() {
   const actionApi = bindActionCreators(apiAction, useDispatch())
@@ -16,10 +17,20 @@ function App() {
   const [mapCenter, setMapCenter] = useState([13, 100]);
   const [keyWord, setKeyWord] = useState('confirmed');
   const [selectedListBar, setSelectedListBar] = useState(false);
-
+  const [Api_TH, setApiTH] = useState([]);
+  const [Api_TH_Today, setApiTHToday] = useState([]);
+  const api_th = "https://covid19.th-stat.com/api/open/cases/sum";
+  const api_th_today = "https://covid19.th-stat.com/api/open/today"
   useEffect(() => {
     actionApi.getAPiCovid();
+    Axios.get(api_th).then(res => {
+      setApiTH(res.data.Province)
+    })
+    Axios.get(api_th_today).then(res => {
+      setApiTHToday(res.data)
+    })
   }, [])
+  console.log(Api_TH_Today)
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
       setKeyWord('confirmed');
@@ -42,7 +53,7 @@ function App() {
   const api = useSelector(state => state.api)
   const MaxtoMin = maxTomin(api) //มากไปน้อย
   const locationArray = MaxtoMin;
-
+  //******************************************************* */
   // const maxTomin_confirmed = (api) => {
   //   return [...api].sort((location1, location2) => {
   //     return location2.latest.confirmed - location1.latest.confirmed;
@@ -51,7 +62,7 @@ function App() {
   // const api = useSelector(state => state.api)
   // const MaxtoMin = maxTomin_confirmed(api) //มากไปน้อย
   // const locationArray = MaxtoMin;
-
+  //******************************************************* */
 
   const onSelected = useCallback((id) => {
     const location = locationArray.find(_location => _location.id === id);
@@ -73,7 +84,7 @@ function App() {
   }
   let ChartView = null;
   if (selected != null) {
-    ChartView = <Chart location={selected} onCLickClose={onDeSelected} />
+    ChartView = <Chart location={selected} onCLickClose={onDeSelected} Api_TH={Api_TH} Api_TH_Today={Api_TH_Today} />
   }
   let showListBar = null;
   if (selectedListBar) {
