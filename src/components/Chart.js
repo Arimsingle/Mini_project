@@ -12,7 +12,7 @@ const Chart = (props) => {
     }
     const totalElements = tatalKeyArray.map((key, index) => {
         const count = latest[key];
-        const data = [{ name: key.toUpperCase(), Covid: count, pv: 10, amt: 10 }];
+        const data = [{ name: key.toUpperCase(), Covid: count}];
         const colorArray = ['#ffcf00', '#7cbb15', 'red']
         return (
             <BarChart key={index} width={200} height={250} data={data}>

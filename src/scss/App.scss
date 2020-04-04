@@ -59,7 +59,6 @@
     z-index: 30;
     opacity: 95%;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px;
-
 }
 .list-view2 {
     background-color: $white-ter;
@@ -74,8 +73,6 @@
     opacity: 95%;
     box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
     overflow-y: auto;
-
-
 }
 .confirmed {
     color: orange;
@@ -85,26 +82,28 @@
 }
 .deaths {
     color: red;
-    
 }
 .list-view-brand,
 .list-view-total {
-    background-color: white;
-    border-bottom: 1px solid $grey-lighter;
+    background-color: whitesmoke;
+    border-bottom: 1px solid #fa8208;
+    box-shadow: 0.1px 0.1px 1px 0px #fa8208;
     flex-shrink: 0;
     padding: 10px;
     text-align: center;
 }
 
 .list-view-locations {
+    background-color: whitesmoke;
     border-bottom: 1px solid $grey-lighter;
+    box-shadow: 0.1px 0.1px 1px 0px #fa8208;
     flex-grow: 1;
     position: relative;
     overflow-y: auto;
 }
 
 .list-view-location {
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: white;
     padding: 10px;
     cursor: pointer;
 
@@ -117,11 +116,12 @@
     }
 
     &:not(:last-child) {
-        border-bottom: 1px solid $grey-lighter;
+        border-bottom: 1px solid white;
     }
 
     &:hover {
-        background-color: #eeeeee;
+        background-color: rgba(0, 0, 0, 0.03);
+        box-shadow: 0.1px 0.1px 1px 0px $black-ter;
     }
 
     &.selected {
@@ -133,12 +133,38 @@
         color: white;
     }
 }
-.margin-r{
+
+.list-view-location-list {
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+
+    &:first-child {
+        margin-top: 10px;
+    }
+
+    &:last-child {
+        margin-bottom: 10px;
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid $grey-lighter;
+    }
+    &.selected {
+        color: white;
+        background-color: $black-ter;
+    }
+
+    &.selected .title {
+        color: white;
+    }
+}
+.margin-r {
     margin-right: 30px;
 }
 // DETAILSVIEW
 .details-view {
-    background-color: white;
+    background-color: whitesmoke;
     box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
     width: 322px;
     padding: 20px;
@@ -158,4 +184,48 @@
     right: 12px;
     z-index: 22;
     cursor: pointer;
+}
+.details-view-close-list {
+    font-size: 39px;
+    line-height: 0.1;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 22;
+    cursor: pointer;
+}
+.details-view-close-listbar {
+    font-size: 50px;
+    line-height: 0.5;
+    position: absolute;
+    // box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.15);
+    top: 12px;
+    left: 15px;
+    z-index: 22;
+    cursor: pointer;
+}
+.bg-listbar {
+    background-color: white;
+    top: 90%;
+    padding: 30px;
+    position: fixed;
+    z-index: 20;
+    border-radius: 8px;
+}
+.s-v-g {
+    width: 25px;
+}
+// HOVER
+.bg-listbar:hover {
+    background-color: $black-ter;
+    color: white;
+    top: 90%;
+    padding: 30px;
+    position: fixed;
+    z-index: 20;
+    border-radius: 8px;
+}
+
+// RESPONSIVE
+@media only screen and (max-width: 800px) {
 }

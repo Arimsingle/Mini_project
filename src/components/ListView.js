@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 const tatalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const ListView = (props) => {
     const [selectedStatus, setSelectesStatus] = useState(false);
-    const { locationArray, selected, onSelected, onDeSelected, onSelectedKey } = props;
+    const { locationArray, selected, onSelected, onDeSelected, onSelectedKey, closeListBar } = props;
     const Click = (id) => {
         if (selected == null) {
             onSelected(id)
@@ -67,6 +67,7 @@ const ListView = (props) => {
     });
     return (
         <div className="list-view">
+            <div className="details-view-close-list" onClick={()=>closeListBar(state=>!state)}>&times;</div>
             <div className="list-view-brand">
                 <img src="https://www.computing.psu.ac.th/th/wp-content/uploads/2018/03/PSU_CoC_ENG.png" width="300px" />
             </div>

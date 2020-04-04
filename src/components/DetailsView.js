@@ -15,7 +15,7 @@ const DetailsView = (props) => {
         const count = latest[key];
         key = key.toUpperCase()
         return (
-            <div key={key} className="list-view-location">
+            <div key={key} className="list-view-location-list">
                 <div className="columns">
                     <div className="column">
                         <h6 className="title is-6">{key}</h6>
