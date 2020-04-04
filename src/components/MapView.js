@@ -1,8 +1,9 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet'
 import { divIcon } from 'leaflet';
+
 const MapView = (props) => {
-    const { locationArray } = props
+    const { locationArray, mapCenter, onSelecteMarker } = props
     const iconArray = {
         safe: divIcon({ className: 'marker-icon Safe', iconSize: [20, 20] }),
         xxSmall: divIcon({ className: 'marker-icon Yellow', iconSize: [18, 18] }),
@@ -51,13 +52,14 @@ const MapView = (props) => {
             <Marker
                 key={`${id}-${country_code}`}
                 position={[latitude, longitude]}
-                icon={markerIcon}>
+                icon={markerIcon}
+                onclick={() => onSelecteMarker(id)}>
                 <Popup>{title}</Popup>
             </Marker>
         );
     });
     return (
-        <Map className="map-view" center={[13, 100]} zoom={5}>
+        <Map className="map-view" center={mapCenter} zoom={5}>
             <TileLayer
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
