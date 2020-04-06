@@ -30,7 +30,7 @@ function App() {
       setApiTHToday(res.data)
     })
   }, [])
-  console.log(Api_TH_Today)
+  console.log(Api_TH)
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
       setKeyWord('confirmed');
