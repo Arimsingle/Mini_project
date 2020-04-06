@@ -1,0 +1,49 @@
+body{
+    position: relative;
+}
+ul{
+    display: flex;
+}
+header{
+    position: sticky;
+    background-color: white;
+    box-shadow: 2px 1px 0px 0px rgba(0, 0, 0, 0.15);
+    padding-bottom: 0px;
+}
+.text-navbar{
+    margin-top: 0px;
+}
+.nav-btw{
+    display: flex;
+}
+.rounded-0{
+    padding: 10px;
+}
+.header-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-mg{
+    margin-right: 20px;
+}
+.btn-tmg{
+    margin-top: 20px;
+}
+.grahp-2{
+    margin-top: -69px;
+    margin-left: -130px;
+}
+.box-ct{
+    margin-left: 150px;
+}
+.text-smr{
+    text-align: center;
+}
+.bd-smr{
+    border-top: 5px solid #1C6EA4;
+    width: 50%;
+    margin-left: 370px;
+    margin-bottom: 10px;
+}
+

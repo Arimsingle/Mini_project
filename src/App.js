@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './scss/App.scss'
+import './css/App.css'
 import 'leaflet/dist/leaflet.css'
 import MapView from './components/MapView';
 import ListView from './components/ListView';
@@ -8,9 +9,11 @@ import { bindActionCreators } from 'redux';
 import { apiAction } from './redux/api/action'
 import DetailsView from './components/DetailsView';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from 'react-bootstrap';
+import { NavDropdown, Nav, Button } from 'react-bootstrap';
 import Axios from 'axios'
 import Chart from './components/Chart';
+import Sub_Chart from './components/Sub_Chart'
+import Sub_Chart2 from './components/Sub_Chart2'
 function App() {
   const actionApi = bindActionCreators(apiAction, useDispatch())
   const [selected, setSelected] = useState(null);
@@ -24,7 +27,7 @@ function App() {
   useEffect(() => {
     actionApi.getAPiCovid();
     Axios.get(api_th).then(res => {
-      setApiTH(res.data.Province)
+      setApiTH(res.data)
     })
     Axios.get(api_th_today).then(res => {
       setApiTHToday(res.data)
@@ -108,14 +111,77 @@ function App() {
   }
   return (
     <div>
-      {showListBar}
+      {/* {showListBar}
       <MapView
         locationArray={locationArray}
         mapCenter={mapCenter}
         onSelecteMarker={onSelected}
       />
       {detailsView}
-      {ChartView}
+      {ChartView} */}
+      <header>
+        <div>
+          <ul className="d-flex justify-content-between">
+            <div className="text-navbar">
+              <Nav className="mr-auto">
+                <div><img src="https://www.computing.psu.ac.th/th/wp-content/uploads/2018/03/COC_logo.png" alt="Photo has problem" width="80px" className="rounded-0" /></div>
+                <Nav.Link className="text-dark" href="#home">Home</Nav.Link>
+                <Nav.Link className="text-dark" href="#link">AI Camera</Nav.Link>
+                <NavDropdown title={<span className="text-dark">Corona Virus</span>} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">World</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.2">ThaiLand</NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </div>
+            <div>
+              <Nav className="mr-auto">
+                <NavDropdown className="text-head" title={<span className="text-dark"><img src="https://i.pinimg.com/originals/fb/3f/e7/fb3fe7a71631c34341ea4ccb98cf24b3.png" alt="Photo has problem" width="30px" className="rounded-circle" />Arim Cheberahim</span>} id="basic-nav-dropdown">
+                  <NavDropdown.Item href="#action/3.1">Option</NavDropdown.Item>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+                </NavDropdown>
+                <Nav.Link className="text-dark" href="#home"><strong>GitHub</strong></Nav.Link>
+                <Nav.Link className="text-dark" href="#home">Register</Nav.Link>
+              </Nav>
+            </div>
+          </ul>
+        </div>
+      </header>
+      <div>
+        <div className="box-ct">
+          <div className="d-flex justify-content-center">
+            <div>
+              <div>
+                <h3>Corona Virus With <strong>ReactJS</strong><br />Trend Of Covid 19 Of World</h3>
+                <br />
+                    Develop ML models in JavaScript<br />
+                    and use ML directly
+                    in the browser or in Node.js.<br />
+                    Use off-the-shelf JavaScript models or convert <br />
+                    Python TensorFlow models to run in the browser<br />
+              </div>
+              <div className="btn-tmg">
+                <Button className="btn-mg" variant="outline-secondary" size="lg">
+                  See Graph World
+          </Button>
+                <Button variant="outline-secondary" size="lg">
+                  See Info ThaiLand
+          </Button>
+              </div>
+            </div>
+            <div>
+              <Sub_Chart2 />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="bd-smr"></div>
+          <h3 className="text-smr">Summary ThaiLand Today</h3>
+        </div>
+      </div>
+      <footer>
+      </footer>
     </div>
   );
 }
