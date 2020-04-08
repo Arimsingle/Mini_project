@@ -3,7 +3,7 @@ const tatalKeyArray = ['confirmed', 'recovered', 'deaths'];
 const ListView = (props) => {
     const [selectedStatus, setSelectesStatus] = useState(false);
     const [test, settest] = useState('confirmed');
-    const { locationArray, selected, onSelected, onDeSelected, onSelectedKey, closeListBar } = props;
+    const { locationArray, selected, onSelected, onDeSelected, onSelectedKey, closeListBar, keyWord } = props;
     const Click = (id) => {
         if (selected == null) {
             onSelected(id)
@@ -42,7 +42,7 @@ const ListView = (props) => {
         const {
             id, country_code,
             country, province,
-            latest: { confirmed }
+            latest: { confirmed, deaths }
         } = location;
         let title = country;
         if (province !== '' && province !== country) {
@@ -61,7 +61,7 @@ const ListView = (props) => {
                         <h6 className="title is-6">{title}</h6>
                     </div>
                     <div className="column">
-                        <p className="is-6 has-text-right">{`${confirmed} คน`}</p>
+                        <p className="is-6 has-text-right">{`${test === "confirmed" ? confirmed : deaths} คน`}</p>
                     </div>
                 </div>
             </div>

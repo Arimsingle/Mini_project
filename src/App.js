@@ -7,33 +7,30 @@ import ListView from './components/ListView';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { apiAction } from './redux/api/action'
+import { apiAction_TH_TD } from './redux/api_TH_TD/action'
+import { apiAction_TH_PV } from './redux/api_TH_PV/action'
+import { apiAction_TH_GD } from './redux/api_TH_GD/action'
 import DetailsView from './components/DetailsView';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavDropdown, Nav, Button } from 'react-bootstrap';
-import Axios from 'axios'
 import Chart from './components/Chart';
 import Sub_Chart from './components/Sub_Chart'
 import Sub_Chart2 from './components/Sub_Chart2'
-function App() {
-  const actionApi = bindActionCreators(apiAction, useDispatch())
+const App = () => {
+  const actionApi = bindActionCreators(apiAction, useDispatch());
+  const apiActionTHTD = bindActionCreators(apiAction_TH_TD, useDispatch());
+  const apiReducerTHPV = bindActionCreators(apiAction_TH_PV, useDispatch());
+  const apiActionTHGD = bindActionCreators(apiAction_TH_GD, useDispatch());
   const [selected, setSelected] = useState(null);
   const [mapCenter, setMapCenter] = useState([13, 100]);
   const [keyWord, setKeyWord] = useState('confirmed');
   const [selectedListBar, setSelectedListBar] = useState(false);
-  const [Api_TH, setApiTH] = useState([]);
-  const [Api_TH_Today, setApiTHToday] = useState([]);
-  const api_th = "https://covid19.th-stat.com/api/open/cases/sum";
-  const api_th_today = "https://covid19.th-stat.com/api/open/today"
   useEffect(() => {
     actionApi.getAPiCovid();
-    Axios.get(api_th).then(res => {
-      setApiTH(res.data)
-    })
-    Axios.get(api_th_today).then(res => {
-      setApiTHToday(res.data)
-    })
+    apiActionTHTD.getAPiCovid_TH_TD();
+    apiReducerTHPV.getAPiCovid_TH_PV()
+    apiActionTHGD.getAPiCovid_TH_GD()
   }, [])
-  console.log(Api_TH)
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
       setKeyWord('confirmed');
@@ -54,19 +51,11 @@ function App() {
     })
   }
   const api = useSelector(state => state.api)
+  const Api_TH_Today = useSelector(state => state.Api_TH_Today)
+  const Api_TH_PV = useSelector(state => state.Api_TH)
+  const Api_THGn = useSelector(state => state.Api_TH_GD)
   const MaxtoMin = maxTomin(api) //มากไปน้อย
   const locationArray = MaxtoMin;
-  //******************************************************* */
-  // const maxTomin_confirmed = (api) => {
-  //   return [...api].sort((location1, location2) => {
-  //     return location2.latest.confirmed - location1.latest.confirmed;
-  //   })
-  // }
-  // const api = useSelector(state => state.api)
-  // const MaxtoMin = maxTomin_confirmed(api) //มากไปน้อย
-  // const locationArray = MaxtoMin;
-  //******************************************************* */
-
   const onSelected = useCallback((id) => {
     const location = locationArray.find(_location => _location.id === id);
     if (location === undefined) {
@@ -87,11 +76,12 @@ function App() {
   }
   let ChartView = null;
   if (selected != null) {
-    ChartView = <Chart location={selected} onCLickClose={onDeSelected} Api_TH={Api_TH} Api_TH_Today={Api_TH_Today} />
+    ChartView = <Chart location={selected} onCLickClose={onDeSelected} Api_TH_PV={Api_TH_PV} Api_TH_Today={Api_TH_Today} />
   }
   let showListBar = null;
   if (selectedListBar) {
     showListBar = <ListView
+      keyWord={keyWord}
       locationArray={locationArray}
       selected={selected}
       onSelected={onSelected}
@@ -109,40 +99,45 @@ function App() {
       </div>
     )
   }
+  const MAP_WORLD = () => {
+    return (
+      <div>
+        {showListBar}
+        <MapView
+          locationArray={locationArray}
+          mapCenter={mapCenter}
+          onSelecteMarker={onSelected}
+        />
+        {detailsView}
+        {ChartView}
+      </div>
+    )
+  }
+  useEffect(() => {
+  }, [])
   return (
     <div>
-      {/* {showListBar}
-      <MapView
-        locationArray={locationArray}
-        mapCenter={mapCenter}
-        onSelecteMarker={onSelected}
-      />
-      {detailsView}
-      {ChartView} */}
       <header>
         <div>
           <ul className="d-flex justify-content-between">
             <div className="text-navbar">
               <Nav className="mr-auto">
                 <div><img src="https://www.computing.psu.ac.th/th/wp-content/uploads/2018/03/COC_logo.png" alt="Photo has problem" width="80px" className="rounded-0" /></div>
-                <Nav.Link className="text-dark" href="#home">Home</Nav.Link>
-                <Nav.Link className="text-dark" href="#link">AI Camera</Nav.Link>
-                <NavDropdown title={<span className="text-dark">Corona Virus</span>} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">World</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.2">ThaiLand</NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link className="text-dark" href="">Home</Nav.Link>
+                <Nav.Link className="text-dark" href="">AI Camera</Nav.Link>
+                <Nav.Link className="text-dark" href="">World</Nav.Link>
+                <Nav.Link className="text-dark" href="">ThaiLand</Nav.Link>
               </Nav>
             </div>
-            <div>
+            <div className="text-navbar">
               <Nav className="mr-auto">
                 <NavDropdown className="text-head" title={<span className="text-dark"><img src="https://i.pinimg.com/originals/fb/3f/e7/fb3fe7a71631c34341ea4ccb98cf24b3.png" alt="Photo has problem" width="30px" className="rounded-circle" />Arim Cheberahim</span>} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="#action/3.1">Option</NavDropdown.Item>
+                  <NavDropdown.Item href="">Option</NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+                  <NavDropdown.Item href="">Logout</NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link className="text-dark" href="#home"><strong>GitHub</strong></Nav.Link>
-                <Nav.Link className="text-dark" href="#home">Register</Nav.Link>
+                <Nav.Link className="text-dark" href=""><strong>GitHub</strong></Nav.Link>
+                <Nav.Link className="text-dark" href="">Register</Nav.Link>
               </Nav>
             </div>
           </ul>
@@ -153,34 +148,94 @@ function App() {
           <div className="d-flex justify-content-center">
             <div>
               <div>
-                <h3>Corona Virus With <strong>ReactJS</strong><br />Trend Of Covid 19 Of World</h3>
+                <h3>Corona Virus With <strong style={{ color: "#1C6EA4" }}>React.JS</strong><br />Status Covid 19 Of World</h3>
                 <br />
-                    Develop ML models in JavaScript<br />
-                    and use ML directly
-                    in the browser or in Node.js.<br />
-                    Use off-the-shelf JavaScript models or convert <br />
-                    Python TensorFlow models to run in the browser<br />
+                <p className="text-justify">
+                  Coronavirus disease (COVID-19) is an infectious
+                  disease caused by a newly discovered coronavirus.
+                  Most people infected with the COVID-19 virus
+                  will experience mild to moderate respiratory illness and recover
+                  without requiring special treatment.
+                  Older people, and those with underlying medical problems like
+                  cardiovascular disease, diabetes, chronic respiratory disease
+                </p>
               </div>
-              <div className="btn-tmg">
-                <Button className="btn-mg" variant="outline-secondary" size="lg">
-                  See Graph World
-          </Button>
-                <Button variant="outline-secondary" size="lg">
-                  See Info ThaiLand
-          </Button>
+              <div className="dis-p">
+                <div className="btn-tmg">
+                  <Button className="btn-mg" variant="outline-info" size="lg" >API WORLD</Button>
+                  <Button variant="outline-info" size="lg">API THAILAND</Button>
+                </div>
               </div>
             </div>
             <div>
-              <Sub_Chart2 />
+              <Sub_Chart2 Api_TH_Today={Api_TH_Today} />
             </div>
           </div>
         </div>
         <div>
           <div className="bd-smr"></div>
           <h3 className="text-smr">Summary ThaiLand Today</h3>
+          <div className="d-flex justify-content-center">
+            <Sub_Chart Api_TH_Today={Api_TH_Today} Api_THGn={Api_THGn} />
+          </div>
         </div>
       </div>
-      <footer>
+      <div>
+        <div>
+          <h3 className="text-smr-2">WORLD MAP</h3>
+        </div>
+        {MAP_WORLD()}
+      </div>
+      <footer className="site-footer">
+        <div className="container">
+          <div className="row">
+            <div className="col-sm-12 col-md-6">
+              <h6>About</h6>
+              <p className="text-justify">Hello World,Heh! Hello <i>Mini Project</i> Most people infected with the COVID-19 virus will experience mild to moderate respiratory illness and recover without requiring special treatment.  Older people, and those with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness.</p>
+            </div>
+
+            <div className="col-xs-6 col-md-3">
+              <h6>Categories</h6>
+              <ul className="footer-links">
+                <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
+                <li><a href="http://scanfcode.com/category/front-end-development/">UI Design</a></li>
+                <li><a href="http://scanfcode.com/category/back-end-development/">PHP</a></li>
+                <li><a href="http://scanfcode.com/category/java-programming-language/">Java</a></li>
+                <li><a href="http://scanfcode.com/category/android/">Android</a></li>
+                <li><a href="http://scanfcode.com/category/templates/">Templates</a></li>
+              </ul>
+            </div>
+
+            <div className="col-xs-6 col-md-3">
+              <h6>Quick Links</h6>
+              <ul className="footer-links">
+                <li><a href="http://scanfcode.com/about/">About Us</a></li>
+                <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
+                <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
+                <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
+                <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-md-8 col-sm-6 col-xs-12">
+              <p className="copyright-text">Copyright &copy; 2017 All Rights Reserved by
+         <a href="https://web.facebook.com/arim.mn.10">Arima</a>.
+            </p>
+            </div>
+
+            <div className="col-md-4 col-sm-6 col-xs-12">
+              <ul className="social-icons">
+                <li><a className="facebook" href="#"><i className="fa fa-facebook"></i></a></li>
+                <li><a className="twitter" href="#"><i className="fa fa-twitter"></i></a></li>
+                <li><a className="dribbble" href="#"><i className="fa fa-dribbble"></i></a></li>
+                <li><a className="linkedin" href="#"><i className="fa fa-linkedin"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </footer>
     </div>
   );

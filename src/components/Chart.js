@@ -9,7 +9,7 @@ const Chart = (props) => {
     const {
         location: { country, province, latest },
         onCLickClose,
-        Api_TH,
+        Api_TH_PV,
         Api_TH_Today
     } = props;
     let title = country;
@@ -21,9 +21,7 @@ const Chart = (props) => {
         const count = latest[key];
         const data = [{ name: key.toUpperCase(), Covid: count }];
         arr.push(...data)
-        // const colorArray = ['#ffcf00', '#7cbb15', 'red']
     })
-    console.log(arr[0].name)
     const RechartViews = (
         <BarChart width={400} height={300} data={arr} margin={{
             top: 5, right: 30, left: 20, bottom: 5,
@@ -37,7 +35,7 @@ const Chart = (props) => {
             <Bar dataKey="Covid" fill="#ffcf00" barSize={30} />
         </BarChart>
     )
-    var Api_Obj = Object.keys(Api_TH).map((data, index) => {
+    var Api_Obj = Object.keys(Api_TH_PV).map((data, index) => {
         return (
             <div key={index}>
                 {index === 0 && <p>Population infected with Covid-19 in Thailand</p>}
@@ -53,14 +51,13 @@ const Chart = (props) => {
                         <tr>
                             <td>{index + 1}</td>
                             <td>{data}</td>
-                            <td>{Api_TH[data]}</td>
+                            <td>{Api_TH_PV[data]}</td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
         )
     });
-
     var Api_Obj_Today = Object.keys(Api_TH_Today).map((data, index) => {
         return (
             <div key={index}>
@@ -74,33 +71,16 @@ const Chart = (props) => {
             </div>
         )
     })
-    let ShowStatus = null;
-    let ShowGraph = null;
-    if (showInfo === true && country === "Thailand") {
-        ShowStatus = Api_Obj;
-    }
-    else if (showInfoTD === false && showInfo === false) {
-        ShowGraph = RechartViews
-    }
-    if ((showInfoTD === true && country === "Thailand")) {
-        ShowStatus = Api_Obj_Today;
-    }
-    else if (showInfoTD === false && showInfo === false) {
-        ShowGraph = RechartViews
-    }
     return (
         <div className="list-view2">
             <strong className="d-flex justify-content-center">Covid-19 Graph</strong>
             <div className="d-flex justify-content-center">
-                {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfo(state => !state)}>{showInfo === true ? "See Grahp Of World" : "See Thailand Info"}</Button>}
-                {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfoTD(state => !state)}>{showInfoTD === true ? "See Grahp Of World" : "See Thailand Today"}</Button>}
+                {/* {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfo(state => !state)}>{showInfo === true ? "See Grahp Of World" : "See Thailand Info"}</Button>} */}
+                {/* {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfoTD(state => !state)}>{showInfoTD === true ? "See Grahp Of World" : "See Thailand Today"}</Button>} */}
             </div>
             <div className="d-flex justify-content-center">
                 <div className="flex-clm">
-                    {ShowStatus}
-                </div>
-                <div>
-                    {ShowGraph}
+                    {country === "Thailand" ? Api_Obj : RechartViews}
                 </div>
             </div>
         </div>

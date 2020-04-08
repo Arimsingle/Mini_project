@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Sector } from 'recharts';
-const Sub_Chart2 = () => {
-    const data = [{ name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 }];
+const Sub_Chart2 = (props) => {
+    const {
+        Api_TH_Today
+    } = props;
     const [activeIndex, setActiveIndex] = useState(0)
+    const dataArray = [];
+    const dataArray_Count = [];
+    var DisplayToday = Object.keys(Api_TH_Today).map((data, index) => {
+        if (index < 4) {
+            dataArray.push(data)
+            dataArray_Count.push(Api_TH_Today[data])
+        }
+    })
+    const data =
+        [
+            { name: dataArray[0], value: dataArray_Count[0] },
+            { name: dataArray[1], value: dataArray_Count[1] },
+            { name: dataArray[2], value: dataArray_Count[2] },
+            { name: dataArray[3], value: dataArray_Count[3] },
+        ];
     const renderActiveShape = (props) => {
         const RADIAN = Math.PI / 180;
         const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
@@ -17,7 +33,16 @@ const Sub_Chart2 = () => {
         const ex = mx + (cos >= 0 ? 1 : -1) * 22;
         const ey = my;
         const textAnchor = cos >= 0 ? 'start' : 'end';
-
+        let PC = (dataArray_Count[0] / 69040000) * 100;
+        if (percent === 0.006331785563528915) {
+            PC = (dataArray_Count[1] / 69040000) * 100;
+        }
+        else if (percent === 0.3062473617560152) {
+            PC = (dataArray_Count[2] / 69040000) * 100;
+        }
+        else if (percent === 0.18742085268045588) {
+            PC = (dataArray_Count[3] / 69040000) * 100;
+        }
         return (
             <g>
                 <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>{payload.name}</text>
@@ -39,21 +64,21 @@ const Sub_Chart2 = () => {
                     outerRadius={outerRadius + 10}
                     fill={fill}
                 />
-                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`PV ${value}`}</text>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-                    {`(Rate ${(percent * 100).toFixed(2)}%)`}
+                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#17a2b8" fill="none" />
+                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="#17a2b8" />
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#17a2b8">{`Count ${value} OF ${69.04}M`}</text>
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#17a2b8">
+                    {`(Percent ${(PC).toFixed(5)}%)`}
                 </text>
             </g>
         );
     };
-    const onPieEnter = (data, index) => {
+    const onPieEnter = (dataArray, index) => {
         setActiveIndex(index)
     }
     return (
         <div>
-            <PieChart className="grahp-2" width={600} height={400}>
+            <PieChart className="grahp-2" width={600} height={600}>
                 <Pie
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
@@ -62,7 +87,7 @@ const Sub_Chart2 = () => {
                     cy={200}
                     innerRadius={60}
                     outerRadius={80}
-                    fill="#8884d8"
+                    fill="#17a2b8"
                     onMouseEnter={onPieEnter}
                 />
             </PieChart>

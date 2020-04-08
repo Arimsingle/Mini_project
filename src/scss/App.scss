@@ -17,34 +17,42 @@
 .marker-icon.safe {
     background-color: #7cbb15;
     border-color: #70aa13;
+    opacity: 80%;
 }
 .marker-icon.Yellow {
     background-color: #ffed00;
     border-color: #ffcf00;
+    opacity: 80%;
 }
 .marker-icon.xOrange {
     background-color: #ff9104;
     border-color: #fa8208;
+    opacity: 80%;
 }
 .marker-icon.xxOrange {
     background-color: #f96f09;
     border-color: #f14f12;
+    opacity: 80%;
 }
 .marker-icon.xxxOrange {
     background-color: #e43c02;
     border-color: #c42a02;
+    opacity: 80%;
 }
 .marker-icon.xRed {
     background-color: #c42a02;
     border-color: #911b01;
+    opacity: 80%;
 }
 .marker-icon.xxRed {
     background-color: #911b01;
     border-color: #6b1500;
+    opacity: 80%;
 }
 .marker-icon.xxxRed {
     background-color: #6b1500;
     border-color: #5b1200;
+    opacity: 80%;
 }
 // LISTVIEWS
 .list-view {
@@ -52,7 +60,7 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 0;
+    top:73px;
     bottom: 0;
     left: 0;
     width: 400px;
@@ -65,7 +73,7 @@
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 0;
+    top:73px;
     margin: 0;
     bottom: 0;
     right: 0;
@@ -233,6 +241,14 @@
 .flex-clm{
     display: flex;
     flex-direction: column;
+}
+header{
+    position: fixed;
+    background-color: white;
+    box-shadow: 2px 1px 0px 0px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    margin-top: -100px;
+    z-index: 100;
 }
 // RESPONSIVE
 @media only screen and (max-width: 800px) {

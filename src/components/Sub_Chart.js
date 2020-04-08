@@ -1,48 +1,125 @@
-import React from 'react';
-
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-const Sub_Chart = () => {
-    const data = [
-        {
-            name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-        },
-        {
-            name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-        },
-        {
-            name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-        },
-        {
-            name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-        },
-        {
-            name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-        },
-        {
-            name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-        },
-        {
-            name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-        },
-    ];
+import React, { useState } from 'react';
+import { Card } from 'react-bootstrap';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+const Sub_Chart = (props) => {
+    const {
+        Api_TH_Today,
+        Api_THGn
+    } = props;
+    const dataArray = [];
+    const dataArray_Count = [];
+    const dataGender = [];
+    var DisplayToday = Object.keys(Api_TH_Today).map((data, index) => {
+        if (index < 8) {
+            if (Api_TH_Today[data] < 0) {
+                Api_TH_Today[data] = 0;
+            }
+            dataArray.push({ Name: data, Count: Api_TH_Today[data] })
+        }
+        if (index <= 8) {
+            dataArray_Count.push(Api_TH_Today[data])
+        }
+    })
+    const DisplayToday_C = (
+        <div>
+            <h3 className="text-smr-2">Status of an infected person</h3>
+            <div className="d-flex justify-content-center">
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>Confirmed</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[0]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>Recovered</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[1]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>Hospitalized</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[2]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+            </div>
+            <br />
+            <div className="d-flex justify-content-center">
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>Deaths</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[3]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>NewConfirmed</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[4]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>NewRecovered</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[5]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+            </div>
+            <br />
+            <div className="d-flex justify-content-center">
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>NewHospitalized</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[7]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>NewDeaths</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[6]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+                <Card border="info" style={{ width: '15rem' }}>
+                    <Card.Header>UpdateDate</Card.Header>
+                    <Card.Body>
+                        <Card.Title>{dataArray_Count[8]}</Card.Title>
+                    </Card.Body>
+                </Card>&#160;&#160;&#160;&#160;&#160;&#160;
+            </div>
+            <br />
+            <div>
+                <h3 className="text-smr-2">Status of an infected Gender</h3>
+                <div className="d-flex justify-content-around">
+                    <div>
+                        <img src="https://upload.wikimedia.org/wikipedia/en/b/bb/Male_Bathroom_Symbol.png" width="100px" alt="male" />
+                        <p>Male:{Api_THGn.Male}</p>
+                    </div>
+                    <div>
+                        <img src="https://pngimage.net/wp-content/uploads/2018/05/female-png-5.png" width="75px" alt="female" />
+                        <p>Female:{Api_THGn.Female}</p>
+                    </div>
+                    <div>
+                        <img src="https://vistapointe.net/images/unknown-2.jpg" width="135px" alt="Unknow" />
+                        <p className="Unknow">Unknow:{Api_THGn.Unknown}</p>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <br />
+        </div>
+    )
     return (
         <div>
-            <AreaChart
-                width={500}
-                height={400}
-                data={data}
-                margin={{
-                    top: 10, right: 30, left: 0, bottom: 0,
-                }}
-            >
+            <h3 className="text-smr-2">Histrogram Grahp</h3>
+            <BarChart width={1050} height={300} data={dataArray}
+                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="Name" />
                 <YAxis />
                 <Tooltip />
-                <Area type="monotone" dataKey="uv" stackId="1" stroke="#8884d8" fill="#8884d8" />
-                <Area type="monotone" dataKey="pv" stackId="1" stroke="#82ca9d" fill="#82ca9d" />
-                <Area type="monotone" dataKey="amt" stackId="1" stroke="#ffc658" fill="#ffc658" />
-            </AreaChart>
+                <Legend />
+                <Bar dataKey="Count" fill="#17a2b8" />
+            </BarChart>
+            {DisplayToday_C}
         </div>
     )
 }
