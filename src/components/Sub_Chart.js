@@ -69,13 +69,13 @@ const Sub_Chart = (props) => {
                 <Card border="info" style={{ width: '15rem' }}>
                     <Card.Header>NewHospitalized</Card.Header>
                     <Card.Body>
-                        <Card.Title>{dataArray_Count[7]}</Card.Title>
+                        <Card.Title>{dataArray_Count[6]}</Card.Title>
                     </Card.Body>
                 </Card>&#160;&#160;&#160;&#160;&#160;&#160;
                 <Card border="info" style={{ width: '15rem' }}>
                     <Card.Header>NewDeaths</Card.Header>
                     <Card.Body>
-                        <Card.Title>{dataArray_Count[6]}</Card.Title>
+                        <Card.Title>{dataArray_Count[7]}</Card.Title>
                     </Card.Body>
                 </Card>&#160;&#160;&#160;&#160;&#160;&#160;
                 <Card border="info" style={{ width: '15rem' }}>
@@ -117,7 +117,7 @@ const Sub_Chart = (props) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="Count" fill="#17a2b8" />
+                <Bar dataKey="Count" fill="#5bc0de" />
             </BarChart>
             {DisplayToday_C}
         </div>

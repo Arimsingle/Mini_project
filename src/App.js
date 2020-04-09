@@ -12,10 +12,13 @@ import { apiAction_TH_PV } from './redux/api_TH_PV/action'
 import { apiAction_TH_GD } from './redux/api_TH_GD/action'
 import DetailsView from './components/DetailsView';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavDropdown, Nav, Button } from 'react-bootstrap';
+import { NavDropdown, Nav, Button, Modal } from 'react-bootstrap';
 import Chart from './components/Chart';
 import Sub_Chart from './components/Sub_Chart'
 import Sub_Chart2 from './components/Sub_Chart2'
+import Linear_regression from './components/Linear_regression'
+import Axios from 'axios';
+import AnchorLink from 'react-anchor-link-smooth-scroll'
 const App = () => {
   const actionApi = bindActionCreators(apiAction, useDispatch());
   const apiActionTHTD = bindActionCreators(apiAction_TH_TD, useDispatch());
@@ -25,11 +28,16 @@ const App = () => {
   const [mapCenter, setMapCenter] = useState([13, 100]);
   const [keyWord, setKeyWord] = useState('confirmed');
   const [selectedListBar, setSelectedListBar] = useState(false);
+  const [dataArray, setDataArray] = useState([]);
+  const apiTimeline = "https://covid19.th-stat.com/api/open/timeline"
   useEffect(() => {
+    Axios.get(apiTimeline).then(res => {
+      setDataArray(res.data.Data)
+    })
     actionApi.getAPiCovid();
     apiActionTHTD.getAPiCovid_TH_TD();
-    apiReducerTHPV.getAPiCovid_TH_PV()
-    apiActionTHGD.getAPiCovid_TH_GD()
+    apiReducerTHPV.getAPiCovid_TH_PV();
+    apiActionTHGD.getAPiCovid_TH_GD();
   }, [])
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
@@ -115,18 +123,48 @@ const App = () => {
   }
   useEffect(() => {
   }, [])
-  return (
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const ModalAlert = (
     <div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Api World</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Arima Deverloper</Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleClose}>
+            Open
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  )
+  return (
+    <div id="header-page">
+      {ModalAlert}
       <header>
         <div>
           <ul className="d-flex justify-content-between">
             <div className="text-navbar">
               <Nav className="mr-auto">
                 <div><img src="https://www.computing.psu.ac.th/th/wp-content/uploads/2018/03/COC_logo.png" alt="Photo has problem" width="80px" className="rounded-0" /></div>
-                <Nav.Link className="text-dark" href="">Home</Nav.Link>
-                <Nav.Link className="text-dark" href="">AI Camera</Nav.Link>
-                <Nav.Link className="text-dark" href="">World</Nav.Link>
-                <Nav.Link className="text-dark" href="">ThaiLand</Nav.Link>
+                <div style={{ display: "flex" }}>
+                  <Nav.Link ><AnchorLink href="#header-page">Home</AnchorLink></Nav.Link>
+                  <NavDropdown title="ThaiLand Info" id="basic-nav-dropdown">
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Histrogram Grahp</AnchorLink></NavDropdown.Item>
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected person</AnchorLink></NavDropdown.Item>
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected Gender</AnchorLink></NavDropdown.Item>
+                  </NavDropdown>
+                  <NavDropdown title="World Info" id="basic-nav-dropdown">
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Histrogram Grahp</AnchorLink></NavDropdown.Item>
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected person</AnchorLink></NavDropdown.Item>
+                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected Gender</AnchorLink></NavDropdown.Item>
+                  </NavDropdown>
+                  <Nav.Link ><AnchorLink href="#map-world" className="nav-text-bar">AI Camera</AnchorLink></Nav.Link>
+                  <Nav.Link ><AnchorLink href="#map-world" className="nav-text-bar">AI Predict</AnchorLink></Nav.Link>
+                </div>
               </Nav>
             </div>
             <div className="text-navbar">
@@ -146,9 +184,9 @@ const App = () => {
       <div>
         <div className="box-ct">
           <div className="d-flex justify-content-center">
-            <div>
+            <div style={{ margin: "100px" }}>
               <div>
-                <h3>Corona Virus With <strong style={{ color: "#1C6EA4" }}>React.JS</strong><br />Status Covid 19 Of World</h3>
+                <h3>Corona Virus With <strong style={{ color: "#00c2ff" }}>React.JS</strong><br />Status Covid 19 Of World</h3>
                 <br />
                 <p className="text-justify">
                   Coronavirus disease (COVID-19) is an infectious
@@ -162,29 +200,38 @@ const App = () => {
               </div>
               <div className="dis-p">
                 <div className="btn-tmg">
-                  <Button className="btn-mg" variant="outline-info" size="lg" >API WORLD</Button>
+                  <Button className="btn-mg" variant="outline-info" size="lg" onClick={handleShow}>API WORLD</Button>
                   <Button variant="outline-info" size="lg">API THAILAND</Button>
                 </div>
               </div>
             </div>
-            <div>
+            <div style={{ margin: "100px" }}>
               <Sub_Chart2 Api_TH_Today={Api_TH_Today} />
             </div>
           </div>
         </div>
-        <div>
+        <div id="thailand">
           <div className="bd-smr"></div>
-          <h3 className="text-smr">Summary ThaiLand Today</h3>
+          <h3 className="text-smr">ThaiLand Status Today</h3>
           <div className="d-flex justify-content-center">
             <Sub_Chart Api_TH_Today={Api_TH_Today} Api_THGn={Api_THGn} />
           </div>
         </div>
       </div>
+      <div id="linear-regression">
+        <div>
+          <h3 className="text-smr-2">Prediction statistics(linear regression)</h3>
+        </div>
+        <Linear_regression dataArray={dataArray} />
+      </div>
       <div>
         <div>
-          <h3 className="text-smr-2">WORLD MAP</h3>
+          <h3 className="text-smr">World Status Today</h3>
+          <p className="d-flex justify-content-center">เลือกประเทศไทยเพื่อดูจำนวนคนที่ติดของแต่ล่ะจังหวัด</p>
         </div>
-        {MAP_WORLD()}
+        <div id="map-world">
+          {MAP_WORLD()}
+        </div>
       </div>
       <footer className="site-footer">
         <div className="container">
@@ -228,10 +275,10 @@ const App = () => {
 
             <div className="col-md-4 col-sm-6 col-xs-12">
               <ul className="social-icons">
-                <li><a className="facebook" href="#"><i className="fa fa-facebook"></i></a></li>
-                <li><a className="twitter" href="#"><i className="fa fa-twitter"></i></a></li>
-                <li><a className="dribbble" href="#"><i className="fa fa-dribbble"></i></a></li>
-                <li><a className="linkedin" href="#"><i className="fa fa-linkedin"></i></a></li>
+                <li><a className="facebook" href="https://web.facebook.com/arim.mn.10/" target='_blank'><i className="fa fa-facebook"></i></a></li>
+                <li><a className="twitter" href="https://github.com/Arimsingle" target='_blank'><i className="fa fa-github"></i></a></li>
+                <li><a className="dribbble" href="https://steamcommunity.com/profiles/76561198382602287/" target='_blank'><i className="fa fa-steam"></i></a></li>
+                <li><a className="linkedin" href="https://medium.com/@arimcheberahim"><i className="fa fa-medium"></i></a></li>
               </ul>
             </div>
           </div>

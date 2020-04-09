@@ -64,10 +64,10 @@ const Sub_Chart2 = (props) => {
                     outerRadius={outerRadius + 10}
                     fill={fill}
                 />
-                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#17a2b8" fill="none" />
-                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="#17a2b8" />
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#17a2b8">{`Count ${value} OF ${69.04}M`}</text>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#17a2b8">
+                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#5bc0de" fill="none" />
+                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="#5bc0de" />
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#5bc0de">{`Count ${value} OF ${69.04}M`}</text>
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#5bc0de">
                     {`(Percent ${(PC).toFixed(5)}%)`}
                 </text>
             </g>
@@ -87,7 +87,7 @@ const Sub_Chart2 = (props) => {
                     cy={200}
                     innerRadius={60}
                     outerRadius={80}
-                    fill="#17a2b8"
+                    fill="#5bc0de"
                     onMouseEnter={onPieEnter}
                 />
             </PieChart>
