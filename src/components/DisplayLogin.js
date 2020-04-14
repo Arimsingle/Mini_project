@@ -22,15 +22,15 @@ const DisplayLogin = (props) => {
     const DisLogin = (
         <div className="box-login">
             <div className="d-flex justify-content-center">
-                <div style={{ margin: "0px 0px 50px 0" }}>
-                    <h1>MINI PROJECT LOGIN</h1>
+                <div className="test-head-login">
+                    <h3>MINI PROJECT LOGIN</h3>
                 </div>
             </div>
             <div className="d-flex justify-content-center">
-                <div style={{ display: "flex" }}>
+                <div className="Login-mobile">
                     <div>
                         <Card>
-                            <Card.Body>
+                            <Card.Body className="box-width2">
                                 <Card.Title>LOGIN</Card.Title>
                                 <Card.Text>
                                     <Form className="box-width">
@@ -45,10 +45,10 @@ const DisplayLogin = (props) => {
                                         <div className="d-flex justify-content-between">
                                             <Button variant="outline-info" onClick={LoginFirebase}>
                                                 Login
-                                </Button>
+                                            </Button>
                                             <Button variant="outline-info" onClick={() => setDisSignup(true)}>
                                                 Register
-                                </Button>
+                                            </Button>
                                         </div>
                                     </Form>
                                 </Card.Text>

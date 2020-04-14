@@ -32,14 +32,11 @@ const SignupForm = (props) => {
     let pass = false;
     const SignUPUsers = () => {
         dataArray.map((data, index) => {
-            console.log(data, email)
             if (data === email) {
-                console.log("YES")
                 pass = true;
             }
         })
-        console.log(pass)
-        if (email.length >= 6 && password >= 6 && name !== '' && lastname !== '' && age !== '' && province !== '' ) {
+        if (email.length >= 6 && password >= 6 && name !== '' && lastname !== '' && age !== '' && province !== '') {
             if (!pass) {
                 firestore.collection('Users').doc(email).set({ name, lastname, email, password, male, female, age, province }).catch((error) => {
                     console.log(error);
@@ -58,66 +55,70 @@ const SignupForm = (props) => {
     }
     return (
         <div>
-            <div style={{ margin: "3% 0px 0px 10px" }}>
+            <div className="test-head-login2">
                 <div className="d-flex justify-content-center">
-                    <img src={Backgroud} />
-                    <Card style={{ width: '550px' }} className="d-flex justify-content-center">
-                        <Card.Body>
-                            <Card.Title>Register</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Arima Developer</Card.Subtitle>
-                            <Card.Text>
-                                <Form style={{ width: "500px" }}>
-                                    <Form.Row>
-                                        <Form.Group as={Col}>
-                                            <Form.Label>Name</Form.Label>
-                                            <Form.Control type="text" placeholder="Enter Name" onChange={(e) => setName(e.target.value)} />
-                                        </Form.Group>
+                    <div className="flex-photo">
+                        <img className="photo-s" src={Backgroud} />
+                        <div className="d-flex justify-content-center">
+                            <Card>
+                                <Card.Body className="box-width3">
+                                    <Card.Title>Register</Card.Title>
+                                    <Card.Subtitle className="mb-2 text-muted">Arima Developer</Card.Subtitle>
+                                    <Card.Text>
+                                        <Form className="box-width4">
+                                            <Form.Row>
+                                                <Form.Group as={Col}>
+                                                    <Form.Label>Name</Form.Label>
+                                                    <Form.Control type="text" placeholder="Enter Name" onChange={(e) => setName(e.target.value)} />
+                                                </Form.Group>
 
-                                        <Form.Group as={Col}>
-                                            <Form.Label>Last-Name</Form.Label>
-                                            <Form.Control type="text" placeholder="Lastname" onChange={(e) => setLastname(e.target.value)} />
-                                        </Form.Group>
-                                    </Form.Row>
+                                                <Form.Group as={Col}>
+                                                    <Form.Label>Last-Name</Form.Label>
+                                                    <Form.Control type="text" placeholder="Lastname" onChange={(e) => setLastname(e.target.value)} />
+                                                </Form.Group>
+                                            </Form.Row>
 
-                                    <Form.Group controlId="formBasicEmail">
-                                        <Form.Label>Email</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
-                                    </Form.Group>
-                                    <Form.Group controlId="formBasicPassword">
-                                        <Form.Label>Password</Form.Label>
-                                        <Form.Control type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} />
-                                    </Form.Group>
-                                    <Form.Group id="formGridCheckbox">
-                                        <Form.Label>Gender</Form.Label>
-                                        <div style={{ display: "flex" }}>
-                                            <Form.Check type="checkbox" value="Male" label="Male" onClick={(e) => setMale(e.target.value)} />
-                                            <Form.Check style={{ margin: "0 0 0 10px" }} type="checkbox" value="Female" label="Female" onClick={(e) => setFemale(e.target.value)} />
-                                        </div>
-                                    </Form.Group>
-                                    <Form.Row>
-                                        <Form.Group as={Col} controlId="formGridCity">
-                                            <Form.Label>Age</Form.Label>
-                                            <Form.Control placeholder="Enter Age" onChange={(e) => setAge(e.target.value)} />
-                                        </Form.Group>
-                                        <Form.Group as={Col} controlId="formGridZip">
-                                            <Form.Label>Province</Form.Label>
-                                            <Form.Control placeholder="Enter Province" onChange={(e) => setProvince(e.target.value)} />
-                                        </Form.Group>
-                                    </Form.Row>
-                                    <div className="d-flex justify-content-between">
-                                        <Button variant="outline-info" onClick={SignUPUsers}>
-                                            Sign Up
+                                            <Form.Group controlId="formBasicEmail">
+                                                <Form.Label>Email</Form.Label>
+                                                <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+                                            </Form.Group>
+                                            <Form.Group controlId="formBasicPassword">
+                                                <Form.Label>Password</Form.Label>
+                                                <Form.Control type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} />
+                                            </Form.Group>
+                                            <Form.Group id="formGridCheckbox">
+                                                <Form.Label>Gender</Form.Label>
+                                                <div style={{ display: "flex" }}>
+                                                    <Form.Check type="checkbox" value="Male" label="Male" onClick={(e) => setMale(e.target.value)} />
+                                                    <Form.Check style={{ margin: "0 0 0 10px" }} type="checkbox" value="Female" label="Female" onClick={(e) => setFemale(e.target.value)} />
+                                                </div>
+                                            </Form.Group>
+                                            <Form.Row>
+                                                <Form.Group as={Col} controlId="formGridCity">
+                                                    <Form.Label>Age</Form.Label>
+                                                    <Form.Control placeholder="Enter Age" onChange={(e) => setAge(e.target.value)} />
+                                                </Form.Group>
+                                                <Form.Group as={Col} controlId="formGridZip">
+                                                    <Form.Label>Province</Form.Label>
+                                                    <Form.Control placeholder="Enter Province" onChange={(e) => setProvince(e.target.value)} />
+                                                </Form.Group>
+                                            </Form.Row>
+                                            <div className="d-flex justify-content-between">
+                                                <Button variant="outline-info" onClick={SignUPUsers}>
+                                                    Sign Up
                                         </Button>
-                                        {
-                                            back && <Button variant="outline-info" onClick={() => setDisSignup(false)}>
-                                                Back to Login
+                                                {
+                                                    back && <Button variant="outline-info" onClick={() => setDisSignup(false)}>
+                                                        Back to Login
                                             </Button>
-                                        }
-                                    </div>
-                                </Form>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
+                                                }
+                                            </div>
+                                        </Form>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
