@@ -12,13 +12,21 @@ import { apiAction_TH_PV } from './redux/api_TH_PV/action'
 import { apiAction_TH_GD } from './redux/api_TH_GD/action'
 import DetailsView from './components/DetailsView';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { NavDropdown, Nav, Button, Modal } from 'react-bootstrap';
+import { NavDropdown, Nav, Button, Modal, Form, Rol, Col, Navbar, Figure } from 'react-bootstrap';
 import Chart from './components/Chart';
 import Sub_Chart from './components/Sub_Chart'
 import Sub_Chart2 from './components/Sub_Chart2'
 import Linear_regression from './components/Linear_regression'
 import Axios from 'axios';
 import AnchorLink from 'react-anchor-link-smooth-scroll'
+import * as firebase from 'firebase';
+import DisplayLogin from './components/DisplayLogin'
+import Background_One from './svg/undraw_the_world_is_mine_nb0e.svg'
+import { firestore } from './index'
+import Camera from './components/Camera'
+import ImgNormal from './photo/IM-0001-0001.jpeg'
+import ImgIn from './photo/person100_bacteria_475.jpeg'
+import Test from './components/Test'
 const App = () => {
   const actionApi = bindActionCreators(apiAction, useDispatch());
   const apiActionTHTD = bindActionCreators(apiAction_TH_TD, useDispatch());
@@ -29,6 +37,21 @@ const App = () => {
   const [keyWord, setKeyWord] = useState('confirmed');
   const [selectedListBar, setSelectedListBar] = useState(false);
   const [dataArray, setDataArray] = useState([]);
+  const [logined, setLogined] = useState(false);
+  const [Islogin, setIslogin] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [gender, setGender] = useState({
+    Male: '',
+    Female: ''
+  });
+  const [age, setAge] = useState('');
+  const [province, setProvince] = useState('');
+
   const apiTimeline = "https://covid19.th-stat.com/api/open/timeline"
   useEffect(() => {
     Axios.get(apiTimeline).then(res => {
@@ -38,6 +61,7 @@ const App = () => {
     apiActionTHTD.getAPiCovid_TH_TD();
     apiReducerTHPV.getAPiCovid_TH_PV();
     apiActionTHGD.getAPiCovid_TH_GD();
+    Session();
   }, [])
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
@@ -62,6 +86,7 @@ const App = () => {
   const Api_TH_Today = useSelector(state => state.Api_TH_Today)
   const Api_TH_PV = useSelector(state => state.Api_TH)
   const Api_THGn = useSelector(state => state.Api_TH_GD)
+  const session = useSelector(state => state.session)
   const MaxtoMin = maxTomin(api) //มากไปน้อย
   const locationArray = MaxtoMin;
   const onSelected = useCallback((id) => {
@@ -102,11 +127,19 @@ const App = () => {
     showListBar = (
       <div className="bg-listbar">
         <div className="details-view-close-listbar" onClick={() => setSelectedListBar(state => !state)}><div className="s-v-g">
-          <svg className="s-v" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-left" className="svg-inline--fa fa-align-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M12.83 352h262.34A12.82 12.82 0 0 0 288 339.17v-38.34A12.82 12.82 0 0 0 275.17 288H12.83A12.82 12.82 0 0 0 0 300.83v38.34A12.82 12.82 0 0 0 12.83 352zm0-256h262.34A12.82 12.82 0 0 0 288 83.17V44.83A12.82 12.82 0 0 0 275.17 32H12.83A12.82 12.82 0 0 0 0 44.83v38.34A12.82 12.82 0 0 0 12.83 96zM432 160H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0 256H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"></path></svg>
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="align-justify" class="svg-inline--fa fa-align-justify fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 416H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-128H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-128H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-128H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"></path></svg>
         </div></div>
       </div>
     )
   }
+  const ToHome = (
+    <div className="bg-listbar2">
+      <div className="details-view-close-listbar2" href="#home"><div className="s-v-g">
+        <AnchorLink href="#home" className="text-dark"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg></AnchorLink>
+      </div>
+      </div>
+    </div>
+  )
   const MAP_WORLD = () => {
     return (
       <div>
@@ -121,72 +154,265 @@ const App = () => {
       </div>
     )
   }
-  useEffect(() => {
-  }, [])
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const ModalAlert = (
+  const [showWorld, setShowWorld] = useState(false);
+  const handleClose = () => setShowWorld(false);
+  const handleShow = () => setShowWorld(true);
+
+  const [showWorld2, setShowWorld2] = useState(false);
+  const handleClose2 = () => setShowWorld2(false);
+  const handleShow2 = () => setShowWorld2(true);
+
+  const [showWorld3, setShowWorld3] = useState(false);
+  const handleClose3 = () => setShowWorld3(false);
+  const handleShow3 = () => setShowWorld3(true);
+
+  const [showWorld4, setShowWorld4] = useState(false);
+  const handleClose4 = () => setShowWorld4(false);
+  const handleShow4 = () => setShowWorld4(true);
+  const [getData, setGetData] = useState({});
+  const Session = () => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        setLoading(true);
+        setIslogin(user.email);
+        setLogined(true);
+      } else {
+        setLoading(true);
+        setLogined(false);
+      }
+    });
+  }
+  const Logout = () => {
+    firebase.auth().signOut().then(() => {
+      setLoading(true);
+      setLogined(false);
+    }).catch(error => [
+      console.log(error)
+    ])
+  }
+  const ModalAlertWorld = (
     <div>
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showWorld} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Api World</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Arima Deverloper</Modal.Body>
+        <Modal.Body>https://coronavirus-tracker-api.herokuapp.com/v2/locations</Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleClose}>
-            Open
+          <Button variant="outline-danger" onClick={handleClose}>
+            Close
           </Button>
         </Modal.Footer>
       </Modal>
     </div>
   )
-  return (
-    <div id="header-page">
-      {ModalAlert}
-      <header>
-        <div>
-          <ul className="d-flex justify-content-between">
-            <div className="text-navbar">
-              <Nav className="mr-auto">
-                <div><img src="https://www.computing.psu.ac.th/th/wp-content/uploads/2018/03/COC_logo.png" alt="Photo has problem" width="80px" className="rounded-0" /></div>
-                <div style={{ display: "flex" }}>
-                  <Nav.Link ><AnchorLink href="#header-page">Home</AnchorLink></Nav.Link>
-                  <NavDropdown title="ThaiLand Info" id="basic-nav-dropdown">
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Histrogram Grahp</AnchorLink></NavDropdown.Item>
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected person</AnchorLink></NavDropdown.Item>
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected Gender</AnchorLink></NavDropdown.Item>
-                  </NavDropdown>
-                  <NavDropdown title="World Info" id="basic-nav-dropdown">
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Histrogram Grahp</AnchorLink></NavDropdown.Item>
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected person</AnchorLink></NavDropdown.Item>
-                    <NavDropdown.Item><AnchorLink href="#thailand" className="nav-text-bar">Infected Gender</AnchorLink></NavDropdown.Item>
-                  </NavDropdown>
-                  <Nav.Link ><AnchorLink href="#map-world" className="nav-text-bar">AI Camera</AnchorLink></Nav.Link>
-                  <Nav.Link ><AnchorLink href="#map-world" className="nav-text-bar">AI Predict</AnchorLink></Nav.Link>
-                </div>
-              </Nav>
-            </div>
-            <div className="text-navbar">
-              <Nav className="mr-auto">
-                <NavDropdown className="text-head" title={<span className="text-dark"><img src="https://i.pinimg.com/originals/fb/3f/e7/fb3fe7a71631c34341ea4ccb98cf24b3.png" alt="Photo has problem" width="30px" className="rounded-circle" />Arim Cheberahim</span>} id="basic-nav-dropdown">
-                  <NavDropdown.Item href="">Option</NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="">Logout</NavDropdown.Item>
-                </NavDropdown>
-                <Nav.Link className="text-dark" href=""><strong>GitHub</strong></Nav.Link>
-                <Nav.Link className="text-dark" href="">Register</Nav.Link>
-              </Nav>
-            </div>
-          </ul>
-        </div>
-      </header>
+  const ModalAlertThailand = (
+    <div>
+      <Modal show={showWorld2} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Api World</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>https://covid19.th-stat.com/api/open/cases/sum</Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-danger" onClick={handleClose2}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  )
+  const updateUser = (Islogin) => {
+    if (Islogin.length >= 6 && password >= 6 && name !== '' && lastname !== '' && age !== '' && province !== '') {
+      firestore.collection('Users').doc(Islogin).set({ name, lastname, email, password, gender, age, province }).then(() => {
+        alert("เปลียนแปลงข้แมูลเรียบร้อย")
+      }).catch(() => {
+        alert("มีปัญหาในการเปลียนแปลงของข้อมูล")
+      })
+    } else {
+      alert("มีปัญหาในการเปลียนแปลงของข้อมูล")
+    }
+  }
+  const EditData = (
+    <div>
+      <Modal show={showWorld3} onHide={handleClose3}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-center">
+          <Form style={{ width: "300px" }}>
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="Enter Name" onChange={(e) => setName(e.target.value)} />
+              </Form.Group>
+
+              <Form.Group as={Col}>
+                <Form.Label>Last-Name</Form.Label>
+                <Form.Control type="text" placeholder="Lastname" onChange={(e) => setLastname(e.target.value)} />
+              </Form.Group>
+            </Form.Row>
+
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} />
+            </Form.Group>
+            <Form.Group id="formGridCheckbox">
+              <Form.Label>Gender</Form.Label>
+              <div style={{ display: "flex" }}>
+                <Form.Check type="checkbox" value="Male" label="Male" onClick={(e) => setGender({ ...gender, Male: e.target.value })} />
+                <Form.Check style={{ margin: "0 0 0 10px" }} type="checkbox" value="Female" label="Female" onClick={(e) => setGender({ ...gender, Female: e.target.value })} />
+              </div>
+            </Form.Group>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>Age</Form.Label>
+                <Form.Control placeholder="Enter Age" onChange={(e) => setAge(e.target.value)} />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Province</Form.Label>
+                <Form.Control placeholder="Enter Province" onChange={(e) => setProvince(e.target.value)} />
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-info" onClick={() => updateUser(Islogin)}>
+            Change
+          </Button>
+          <Button variant="outline-danger" onClick={handleClose3}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  )
+  const [FBArray, setDataFB] = useState({});
+
+  const ProfileData = (
+    <div>
+      <Modal show={showWorld4} onHide={handleClose4}>
+        <Modal.Header closeButton>
+          <Modal.Title>Your Profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="d-flex justify-content-center">
+          <Form style={{ width: "300px" }}>
+            <Form.Row>
+              <Form.Group as={Col}>
+                <Form.Label>Name</Form.Label>
+                <Form.Control value={FBArray.name} />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Label>Last-Name</Form.Label>
+                <Form.Control value={FBArray.lastname} />
+              </Form.Group>
+            </Form.Row>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control value={FBArray.email} />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control value={FBArray.password} />
+            </Form.Group>
+            <Form.Group id="formGridCheckbox">
+              <Form.Label>Gender</Form.Label>
+              <Form.Control value={FBArray.male === '' ? "Female" : "Male"} />
+            </Form.Group>
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>Age</Form.Label>
+                <Form.Control value={FBArray.age} />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridZip">
+                <Form.Label>Province</Form.Label>
+                <Form.Control value={FBArray.province} />
+              </Form.Group>
+            </Form.Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-danger" onClick={handleClose4}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  );
+  const UserDataFB = (user) => {
+    handleShow4();
+    firestore.collection('Users').onSnapshot((snapshot) => {
+      console.log("############")
+      let tasksfirebase = snapshot.docs.map(data => {
+        console.log(user, data.id)
+        if (data.id === user) {
+          console.log(data.data())
+          setDataFB(data.data())
+        }
+        else {
+          return;
+        }
+      })
+    })
+  }
+  const ModalShow = (
+    <div>
+      {EditData}
+      {ModalAlertWorld}
+      {ModalAlertThailand}
+    </div>
+  )
+  const Display = (
+    <div id="home">
+      {ModalShow}
+      {ProfileData}
+      <div>
+        <div>{ToHome}</div>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand href="#home"><img src="https://dorm.psu.ac.th/system/files/images/psu-logo.png" alt="Photo has problem" width="50px" /></Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link><AnchorLink href="#home" className="text-dark">HOME</AnchorLink></Nav.Link>
+              <NavDropdown title="THAILAND" id="basic-nav-dropdown">
+                <NavDropdown.Item><AnchorLink href="#thailand" className="text-dark">Histrogram Grahp</AnchorLink></NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item><AnchorLink href="#Infected-person" className="text-dark">Infected person</AnchorLink></NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item><AnchorLink href="#Infected-Gender" className="text-dark">Infected Gender</AnchorLink></NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link><AnchorLink href="#map-world" className="text-dark">WORLD</AnchorLink></Nav.Link>
+              <Nav.Link ><AnchorLink href="#Ai-camera" className="text-dark">AI CAMERA</AnchorLink></Nav.Link>
+              <Nav.Link ><AnchorLink href="#linear-regression" className="text-dark">AI PREDICT</AnchorLink></Nav.Link>
+            </Nav>
+            <Form inline>
+              <NavDropdown className="mr-sm-2" title={<span className="text-dark"><img src="https://i.pinimg.com/originals/fb/3f/e7/fb3fe7a71631c34341ea4ccb98cf24b3.png" alt="Photo has problem" width="30px" className="rounded-circle" />{Islogin.toUpperCase()}</span>} id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={() => UserDataFB(Islogin)}>Profile</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={handleShow3}>Edit Profile</NavDropdown.Item>
+              </NavDropdown>
+            </Form>
+            <Form inline>
+              <Button variant="outline-danger" size="sm" onClick={Logout}>LOGOUT</Button>
+            </Form>
+          </Navbar.Collapse>
+        </Navbar>
+
+      </div>
+      {/* </header> */}
       <div>
         <div className="box-ct">
-          <div className="d-flex justify-content-center">
-            <div style={{ margin: "100px" }}>
-              <div>
-                <h3>Corona Virus With <strong style={{ color: "#00c2ff" }}>React.JS</strong><br />Status Covid 19 Of World</h3>
+          <div className="div-box2">
+            <div className="position-photo">
+              <div className="photo-nav">
+                <div style={{ display: "flex" }}>
+                  <div>
+                    <img className="Background_One" src={Background_One} />
+                  </div>
+                  <h3><strong style={{ color: "#00c2ff" }}>React.JS</strong><br />Corona Virus Status World and ThaiLand</h3>
+                </div>
                 <br />
                 <p className="text-justify">
                   Coronavirus disease (COVID-19) is an infectious
@@ -201,11 +427,11 @@ const App = () => {
               <div className="dis-p">
                 <div className="btn-tmg">
                   <Button className="btn-mg" variant="outline-info" size="lg" onClick={handleShow}>API WORLD</Button>
-                  <Button variant="outline-info" size="lg">API THAILAND</Button>
+                  <Button className="btn-mg2" variant="outline-info" size="lg" onClick={handleShow2}>API THAILAND</Button>
                 </div>
               </div>
             </div>
-            <div style={{ margin: "100px" }}>
+            <div className="circle-grahp">
               <Sub_Chart2 Api_TH_Today={Api_TH_Today} />
             </div>
           </div>
@@ -222,7 +448,48 @@ const App = () => {
         <div>
           <h3 className="text-smr-2">Prediction statistics(linear regression)</h3>
         </div>
-        <Linear_regression dataArray={dataArray} />
+        <div>
+          <Linear_regression dataArray={dataArray} />
+        </div>
+        <div>
+          <div>
+            <h3 className="text-smr-2" id="Ai-camera">AI Camera</h3>
+          </div>
+          <div className="d-flex justify-content-center">
+            <h5 style={{ color: "#818a91" }}>กล้องอัจฉริยะที่สามารถตรวจคนติดเชื้อโควิค19 ด้วยภาพ X-RAY</h5>
+          </div>
+          <div className="d-flex justify-content-center">
+            <h6 style={{ color: "#818a91" }}>ตัวอย่างรูปภาพ</h6>
+          </div>
+          <div className="d-flex justify-content-center">
+            <Figure>
+              <Figure.Image
+                width={171}
+                height={180}
+                alt="171x180"
+                src={ImgNormal}
+              />
+              <Figure.Caption>
+                Nomal Person
+                </Figure.Caption>
+            </Figure>
+            &#160;&#160;&#160;&#160;&#160;&#160;
+            <Figure>
+              <Figure.Image
+                width={171}
+                height={180}
+                alt="171x180"
+                src={ImgIn}
+              />
+              <Figure.Caption>
+                Infected Person
+                </Figure.Caption>
+            </Figure>
+          </div>
+          <div>
+            <Camera />
+          </div>
+        </div>
       </div>
       <div>
         <div>
@@ -238,29 +505,20 @@ const App = () => {
           <div className="row">
             <div className="col-sm-12 col-md-6">
               <h6>About</h6>
-              <p className="text-justify">Hello World,Heh! Hello <i>Mini Project</i> Most people infected with the COVID-19 virus will experience mild to moderate respiratory illness and recover without requiring special treatment.  Older people, and those with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness.</p>
+              <p className="text-justify"><i>Mini Project</i> Most people infected with the COVID-19 virus will experience mild to moderate respiratory illness and recover without requiring special treatment.  Older people, and those with underlying medical problems like cardiovascular disease, diabetes, chronic respiratory disease, and cancer are more likely to develop serious illness.</p>
             </div>
-
             <div className="col-xs-6 col-md-3">
-              <h6>Categories</h6>
+              <h6>Programing</h6>
               <ul className="footer-links">
-                <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
-                <li><a href="http://scanfcode.com/category/front-end-development/">UI Design</a></li>
-                <li><a href="http://scanfcode.com/category/back-end-development/">PHP</a></li>
-                <li><a href="http://scanfcode.com/category/java-programming-language/">Java</a></li>
-                <li><a href="http://scanfcode.com/category/android/">Android</a></li>
-                <li><a href="http://scanfcode.com/category/templates/">Templates</a></li>
+                <li><a href="http://scanfcode.com/category/c-language/" target='_blank'>React</a></li>
+                <li><a style={{ margin: "10px 10px 10px 10px" }} href="http://scanfcode.com/category/c-language/" target='_blank'>Tensorflow</a></li>
               </ul>
             </div>
 
             <div className="col-xs-6 col-md-3">
-              <h6>Quick Links</h6>
+              <h6>PSU Links</h6>
               <ul className="footer-links">
-                <li><a href="http://scanfcode.com/about/">About Us</a></li>
-                <li><a href="http://scanfcode.com/contact/">Contact Us</a></li>
-                <li><a href="http://scanfcode.com/contribute-at-scanfcode/">Contribute</a></li>
-                <li><a href="http://scanfcode.com/privacy-policy/">Privacy Policy</a></li>
-                <li><a href="http://scanfcode.com/sitemap/">Sitemap</a></li>
+                <li><a href="https://www.phuket.psu.ac.th/" target='_blank'>About PSU</a></li>
               </ul>
             </div>
           </div>
@@ -268,8 +526,8 @@ const App = () => {
         <div className="container">
           <div className="row">
             <div className="col-md-8 col-sm-6 col-xs-12">
-              <p className="copyright-text">Copyright &copy; 2017 All Rights Reserved by
-         <a href="https://web.facebook.com/arim.mn.10">Arima</a>.
+              <p className="copyright-text">&copy; 2020 All Rights Reserved by
+              <a href="https://web.facebook.com/arim.mn.10" target='_blank'>Arima</a>.
             </p>
             </div>
 
@@ -278,14 +536,32 @@ const App = () => {
                 <li><a className="facebook" href="https://web.facebook.com/arim.mn.10/" target='_blank'><i className="fa fa-facebook"></i></a></li>
                 <li><a className="twitter" href="https://github.com/Arimsingle" target='_blank'><i className="fa fa-github"></i></a></li>
                 <li><a className="dribbble" href="https://steamcommunity.com/profiles/76561198382602287/" target='_blank'><i className="fa fa-steam"></i></a></li>
-                <li><a className="linkedin" href="https://medium.com/@arimcheberahim"><i className="fa fa-medium"></i></a></li>
+                <li><a className="linkedin" href="https://medium.com/@arimcheberahim" target='_blank'><i className="fa fa-medium"></i></a></li>
               </ul>
             </div>
           </div>
         </div>
       </footer>
     </div>
-  );
+  )
+  // if (loading === true && logined === false) {
+  //   return <DisplayLogin setLogined={setLogined} logined={logined} />
+  // }
+  // if (logined === false) {
+  //   return (
+  //     <div className="d-flex justify-content-center m-5">
+  //       <div className="spinner-grow text-info" style={{ width: "10rem", height: "10rem" }} role="status">
+  //         <span className="sr-only">Loading...</span>
+  //       </div>
+  //     </div>
+  //   )
+  // }
+  // if (logined === true) {
+  //   return Display;
+  // }
+  return <Test/>
+
+
 }
 
 export default App;

@@ -23,17 +23,19 @@ const Chart = (props) => {
         arr.push(...data)
     })
     const RechartViews = (
-        <BarChart width={400} height={300} data={arr} margin={{
-            top: 5, right: 30, left: 20, bottom: 5,
-        }
-        }>
-            <XAxis dataKey="name" stroke={'#000000'} />
-            <YAxis />
-            <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
-            <Legend width={100} wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
-            <CartesianGrid stroke="#ccc" strokeDasharray="100 100" />
-            <Bar dataKey="Covid" fill="#ffcf00" barSize={30} />
-        </BarChart>
+        <div style={{ margin: "30px" }}>
+            <BarChart width={400} height={300} data={arr} margin={{
+                top: 5, right: 30, left: 20, bottom: 5,
+            }
+            }>
+                <XAxis dataKey="name" stroke={'#000000'} />
+                <YAxis />
+                <Tooltip wrapperStyle={{ width: 100, backgroundColor: '#ccc' }} />
+                <Legend width={100} wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
+                <CartesianGrid stroke="#ccc" strokeDasharray="100 100" />
+                <Bar dataKey="Covid" fill="#00c2ff" barSize={30} />
+            </BarChart>
+        </div>
     )
     var Api_Obj = Object.keys(Api_TH_PV).map((data, index) => {
         return (
@@ -73,7 +75,8 @@ const Chart = (props) => {
     })
     return (
         <div className="list-view2">
-            <strong className="d-flex justify-content-center">Covid-19 Graph</strong>
+            <div className="details-view-close2" onClick={onCLickClose}>&times;</div>
+            <strong className="d-flex justify-content-center">Covid-19 Status</strong>
             <div className="d-flex justify-content-center">
                 {/* {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfo(state => !state)}>{showInfo === true ? "See Grahp Of World" : "See Thailand Info"}</Button>} */}
                 {/* {country === "Thailand" && <Button className="margin-b" variant="outline-dark" onClick={() => setShowInfoTD(state => !state)}>{showInfoTD === true ? "See Grahp Of World" : "See Thailand Today"}</Button>} */}

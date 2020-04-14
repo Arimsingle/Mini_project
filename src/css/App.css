@@ -9,14 +9,23 @@ ul{
     display: flex;
 }
 .text-navbar{
-    margin-top: 15px;
+    margin-top: 0px;
 }
 .nav-text-bar-position{
   margin-top: 10px;
   margin-left: 70px;
 }
+.nav-text-bar{
+  display: flex;
+  color: #33353d;
+}
+.flex-colunm{
+  display: flex;
+  flex-direction: column;
+}
 .nav-text-bar:hover{
   text-decoration: none;
+  color: #47484b;
 }
 .nav-btw{
     display: flex;
@@ -62,10 +71,25 @@ ul{
 .dis-p{
     display: flex;
 }
+.text-dark:hover{
+  text-decoration: none;
+}
 .Unknow{
   margin-left: 30px;
 }
-
+.box-login{
+  margin: 3% 0px 0px 10px;
+}
+.box-width{
+  width: 550px;
+}
+.bg-photo{
+  width: 400px;
+}
+/*SIGN UP*/
+.photo-wellcome{
+  width: 350px;
+}
 /*FOOTER*/
 
 .site-footer
@@ -232,7 +256,45 @@ ul{
     font-weight:600
   }
 }
-
+/*NAVBAR*/
+.text-nav{
+  display: flex;
+}
+.circle-grahp{
+  margin: 80px;
+}
+.test2{
+  display: none;
+}
+/*NAV BAR RE*/
+@media only screen and (max-width: 767px) {
+.text-nav{
+  display: flex;
+  flex-direction: column;
+}
+.test22{
+  display: none;
+}
+.test2{
+  display: flex;
+  flex-direction: column;
+}
+.btn-tmg{
+  display: flex;
+  margin-left: -100px;
+  margin-bottom: 100px;
+}
+.right-0{
+  margin-left: -300px;
+}
+.circle-grahp{
+  margin-top: 10px;
+  margin-left: -250px;
+}
+#thailand{
+  margin-top: -300px;
+}
+}
 
 
 

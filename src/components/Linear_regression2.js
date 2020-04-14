@@ -7,15 +7,11 @@ import { bindActionCreators } from 'redux';
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
-import Linear_regression2 from './Linear_regression2';
-import Linear_regression3 from './Linear_regression3';
-const Linear_regression = (props) => {
+const Linear_regression2 = (props) => {
     const {
         dataArray
     } = props;
-    const dataArray2 = dataArray;
     const actionDataArray = bindActionCreators(PredictActions, useDispatch());
-    const [NumberPredict, setNumberPredict] = useState(null);
     let CountDate = [];
     let DataNewConfirmed = [];
     let CountNewConfirmed = [];
@@ -32,7 +28,7 @@ const Linear_regression = (props) => {
     [...DataNewConfirmed].map((dataName, indexParent) => {
         if (indexParent > SelectIndex) {
             Object.keys(dataName).map(data => {
-                if (data === "Deaths") {
+                if (data === "Confirmed") {
                     CountNewConfirmed.push(dataName[data])
                 }
                 if (indexParent > SelectIndex + 6) {
@@ -44,7 +40,7 @@ const Linear_regression = (props) => {
                     if (data === 'Date') {
                         PlotPredictData.push(dataName[data])
                     }
-                    else if (data === "Deaths") {
+                    else if (data === "Confirmed") {
                         PlotPredictCount.push(dataName[data])
                     }
                 }
@@ -54,7 +50,7 @@ const Linear_regression = (props) => {
     });
     console.log(CountNewConfirmed)
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([23, 26, 27, 30, 32, 33, 35, 38]);
+    const NewConfirmed = tf.tensor1d([2169, 2220, 2258, 2369, 2423, 2473, 2518, 2551]);
     // console.log("-----------------DATA-----------------");
     // Days.print();
     // NewConfirmed.print();
@@ -75,7 +71,7 @@ const Linear_regression = (props) => {
     // PredictNewConfirmed_Before.print();
     // console.log("-----------------ERROR-----------------");
     // error(NewConfirmed, PredictNewConfirmed_Before).print();
-    const LearningRate = 0.0335;
+    const LearningRate = 0.0444;
     const optimizer = tf.train.sgd(LearningRate);
     for (let round = 0; round < 300; round++) {
         optimizer.minimize(() => {
@@ -118,7 +114,7 @@ const Linear_regression = (props) => {
     let DataArray = [];
     let oneRound = 0;
     PlotPredictData.map((data, index) => {
-        let dataA = { DateDay: data, Deaths: PlotPredictCount[index] };
+        let dataA = { DateDay: data, Confirmed: PlotPredictCount[index] };
         // if (dataA.DateDay.charAt(3) !== "N")
         //     axios.post(`http://localhost/api/Predicts`, dataA).then(data => console.log(data)).catch(data => console.log(data))
         DataArray.push(dataA);
@@ -135,7 +131,7 @@ const Linear_regression = (props) => {
                 <CartesianGrid strokeDasharray="10 10" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Deaths" stroke="#00c2ff" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey="Confirmed" stroke="#00c2ff" activeDot={{ r: 8 }} />
             </LineChart>
         </div>
     )
@@ -148,35 +144,17 @@ const Linear_regression = (props) => {
                 <CartesianGrid strokeDasharray="10 10" />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="Deaths" stroke="#00c2ff" activeDot={{ r: 8 }} />
+                <Line type="monotone" dataKey="Confirmed" stroke="#00c2ff" activeDot={{ r: 8 }} />
             </LineChart>
         </div>
     )
     return (
-        <div>
-            <div className="d-flex justify-content-center">
-                <h5 className="text-smr-2">Deaths</h5>
-            </div>
-            <div className="d-flex justify-content-center">
-                <div>
-                    {G1}
-                    {G2}
-                </div>
-            </div>
-            <div className="d-flex justify-content-center">
-                <h5 className="text-smr-2">Confirmed</h5>
-            </div>
-            <div className="d-flex justify-content-center">
-                <Linear_regression2 dataArray={dataArray2} />
-            </div>
-            <div className="d-flex justify-content-center">
-                <h5 className="text-smr-2">Recovered</h5>
-            </div>
-            <div className="d-flex justify-content-center">
-                <Linear_regression3 dataArray={dataArray2} />
+        <div className="d-flex justify-content-center">
+            <div>
+                {G1}
+                {G2}
             </div>
         </div>
     )
 }
-export default Linear_regression;
-{/* <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} /> */ }
+export default Linear_regression2;

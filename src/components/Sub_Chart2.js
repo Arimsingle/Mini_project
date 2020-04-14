@@ -24,6 +24,7 @@ const Sub_Chart2 = (props) => {
         const RADIAN = Math.PI / 180;
         const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle,
             fill, payload, percent, value } = props;
+        console.log(percent)
         const sin = Math.sin(-RADIAN * midAngle);
         const cos = Math.cos(-RADIAN * midAngle);
         const sx = cx + (outerRadius + 10) * cos;
@@ -33,14 +34,17 @@ const Sub_Chart2 = (props) => {
         const ex = mx + (cos >= 0 ? 1 : -1) * 22;
         const ey = my;
         const textAnchor = cos >= 0 ? 'start' : 'end';
-        let PC = (dataArray_Count[0] / 69040000) * 100;
-        if (percent === 0.006331785563528915) {
+        let PC = null;
+        if (percent === 0.5) {
+            PC = (dataArray_Count[0] / 69040000) * 100;
+        }
+        else if (percent === 0.007448059584476676) {
             PC = (dataArray_Count[1] / 69040000) * 100;
         }
-        else if (percent === 0.3062473617560152) {
+        else if (percent === 0.2538220305762446) {
             PC = (dataArray_Count[2] / 69040000) * 100;
         }
-        else if (percent === 0.18742085268045588) {
+        else {
             PC = (dataArray_Count[3] / 69040000) * 100;
         }
         return (
@@ -64,10 +68,10 @@ const Sub_Chart2 = (props) => {
                     outerRadius={outerRadius + 10}
                     fill={fill}
                 />
-                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#5bc0de" fill="none" />
-                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="#5bc0de" />
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#5bc0de">{`Count ${value} OF ${69.04}M`}</text>
-                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#5bc0de">
+                <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke="#00c2ff" fill="none" />
+                <circle cx={ex} cy={ey} r={2} fill={fill} stroke="#00c2ff" />
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#00c2ff">{`Count ${value} OF ${69.04}M`}</text>
+                <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#00c2ff">
                     {`(Percent ${(PC).toFixed(5)}%)`}
                 </text>
             </g>
@@ -87,7 +91,7 @@ const Sub_Chart2 = (props) => {
                     cy={200}
                     innerRadius={60}
                     outerRadius={80}
-                    fill="#5bc0de"
+                    fill="#00c2ff"
                     onMouseEnter={onPieEnter}
                 />
             </PieChart>

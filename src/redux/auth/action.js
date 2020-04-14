@@ -1,3 +1,4 @@
+import axios from 'axios'
 export const AuthActions = {
     getLoginStatus: () => async (dispatch) => {
         const res = await axios.get(`http://localhost/api/auth`)
