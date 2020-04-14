@@ -544,22 +544,22 @@ const App = () => {
       </footer>
     </div>
   )
-  // if (loading === true && logined === false) {
-  //   return <DisplayLogin setLogined={setLogined} logined={logined} />
-  // }
-  // if (logined === false) {
-  //   return (
-  //     <div className="d-flex justify-content-center m-5">
-  //       <div className="spinner-grow text-info" style={{ width: "10rem", height: "10rem" }} role="status">
-  //         <span className="sr-only">Loading...</span>
-  //       </div>
-  //     </div>
-  //   )
-  // }
-  // if (logined === true) {
-  //   return Display;
-  // }
-  return <Test/>
+  if (loading === true && logined === false) {
+    return <DisplayLogin setLogined={setLogined} logined={logined} />
+  }
+  if (logined === false) {
+    return (
+      <div className="d-flex justify-content-center m-5">
+        <div className="spinner-grow text-info" style={{ width: "10rem", height: "10rem" }} role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    )
+  }
+  if (logined === true) {
+    return Display;
+  }
+
 
 
 }
