@@ -44,13 +44,17 @@ const Camera = () => {
     return (
         <div>
             <div className="d-flex justify-content-center">
-                <Button variant="outline-info" onClick={Webcam}>Open AI Camera</Button>
                 <div id='webcam-container' className="box-webcam"></div>
+            </div>
+            <div className="d-flex justify-content-center">
                 <div id='label-container' className="text-webcam"></div>
             </div>
-            <br/>
-            <br/>
-            <br/>
+            <div className="d-flex justify-content-center">
+                <Button variant="outline-info" onClick={Webcam}>Open AI Camera</Button>
+            </div>
+            <br />
+            <br />
+            <br />
         </div>
     )
 }

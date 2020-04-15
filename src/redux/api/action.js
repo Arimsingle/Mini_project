@@ -5,6 +5,7 @@ export const apiAction = {
         try {
             const response = await axios.get(api)
             const responseApi = await response.data.locations;
+            console.log(responseApi)
             dispatch({ type: 'GET_API_SUCCESS', api: responseApi });
         } catch (error) {
             console.error(error);
