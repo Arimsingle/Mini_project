@@ -1,8 +1,6 @@
 @import "./Vars";
 @import "~bulma/bulma.sass";
 // MAP
-body{
-}
 .map-view {
     width: 100vw;
     height: 100vh;
@@ -241,7 +239,7 @@ body{
 .bg-listbar {
     background-color: white;
     top: 90%;
-    padding: 30px;
+    padding: 10px;
     position: fixed;
     z-index: 20;
     border-radius: 8px;
@@ -261,7 +259,7 @@ body{
 // HOVER
 .bg-listbar:hover {
     top: 90%;
-    padding: 30px;
+    padding: 10px;
     position: fixed;
     z-index: 20;
     border-radius: 8px;
@@ -341,5 +339,80 @@ header{
     }
     .dis-pl{
         margin-right: -800px;
+    }
+    .list-view {
+        background-color: $white-ter;
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top:30px;
+        bottom: 0;
+        left: 0;
+        width: 330px;
+        z-index: 30;
+        opacity: 95%;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px;
+    }
+    .list-view-location {
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+        cursor: pointer;
+    
+        &:first-child {
+            margin-top: 0px;
+        }
+    
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    
+        &:not(:last-child) {
+            border-bottom: 1px solid white;
+        }
+    
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.03);
+            box-shadow: 0.1px 0.1px 1px 0px $black-ter;
+        }
+    
+        &.selected {
+            color: white;
+            background-color: $black-ter;
+        }
+    
+        &.selected .title {
+            color: white;
+        }
+    }
+    .list-view-location-list {
+        background-color: white;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 8px;
+    
+        &:first-child {
+            margin-top: 0px;
+        }
+    
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    
+        &:not(:last-child) {
+            border-bottom: 1px solid $grey-lighter;
+        }
+        &.selected {
+            color: white;
+            background-color: $black-ter;
+        }
+    
+        &.selected .title {
+            color: white;
+        }
+    }
+    .column{
+        padding-top: 5px;
+        padding-bottom: 0;
     }
 }
