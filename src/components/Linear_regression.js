@@ -72,10 +72,6 @@ const Linear_regression = (props) => {
         return NewConfirmed.sub(PredictNewConfirmed).square().mean();
     }
     const PredictNewConfirmed_Before = Predict(Days)
-    // console.log("-----------------PREDICT-----------------");
-    // PredictNewConfirmed_Before.print();
-    // console.log("-----------------ERROR-----------------");
-    // error(NewConfirmed, PredictNewConfirmed_Before).print();
     const LearningRate = 0.0335;
     const optimizer = tf.train.sgd(LearningRate);
     for (let round = 0; round < 300; round++) {
@@ -85,11 +81,6 @@ const Linear_regression = (props) => {
         })
     }
     const PredictNewConfirmed_After = Predict(Days)
-    // console.log("-----------------PREDICT-----------------");
-    // PredictNewConfirmed_After.toInt().print();
-    // console.log("-----------------ERROR-----------------");
-    // error(NewConfirmed, PredictNewConfirmed_After).print();
-    // PredictNewConfirmed_After.data().then(data => console.log(data));
     let Answer = null;
     let Arr = []
     let Predict_One = [];
@@ -114,14 +105,14 @@ const Linear_regression = (props) => {
         PlotPredictData.push(str);
     })
     PlotPredictCount.push(...Predict_One);
-    // console.log(PlotPredictCount);
-    // console.log(PlotPredictData);
     let DataArray = [];
     let oneRound = 0;
     PlotPredictData.map((data, index) => {
         let dataA = { DateDay: data, Deaths: PlotPredictCount[index] };
-        // if (dataA.DateDay.charAt(3) !== "N")
-        //     axios.post(`http://localhost/api/Predicts`, dataA).then(data => console.log(data)).catch(data => console.log(data))
+        if (dataA.DateDay.charAt(3) !== "N") {
+            if (Object.keys(dataA).length < 7)
+                axios.post(`http://localhost/api/Predicts`, dataA).then(data => console.log(data)).catch(data => console.log(data))
+        }
         DataArray.push(dataA);
     })
     useEffect(() => {
