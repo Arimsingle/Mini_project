@@ -38,10 +38,10 @@ const Sub_Chart2 = (props) => {
         if (percent === 0.5) {
             PC = (dataArray_Count[0] / 69040000) * 100;
         }
-        else if (percent === 0.008805917576611482) {
+        else if (percent === 0.008759635599159075) {
             PC = (dataArray_Count[1] / 69040000) * 100;
         }
-        else if (percent === 0.06322648820007044) {
+        else if (percent === 0.05501051156271899) {
             PC = (dataArray_Count[2] / 69040000) * 100;
         }
         else {

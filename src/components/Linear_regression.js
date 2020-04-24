@@ -55,7 +55,7 @@ const Linear_regression = (props) => {
     console.log("-----------------------CountNewConfirmed--------------------")
     console.log([...CountNewConfirmed])
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([46, 47, 47, 47, 47, 48, 49, 50]);
+    const NewConfirmed = tf.tensor1d([47, 47, 47, 47, 48, 49, 50, 50]);
     // console.log("-----------------DATA-----------------");
     // Days.print();
     // NewConfirmed.print();
@@ -109,10 +109,10 @@ const Linear_regression = (props) => {
     let oneRound = 0;
     PlotPredictData.map((data, index) => {
         let dataA = { DateDay: data, Deaths: PlotPredictCount[index] };
-        if (dataA.DateDay.charAt(3) !== "N") {
-            if (Object.keys(dataA).length < 7)
-                axios.post(`http://localhost/api/Predicts`, dataA).then(data => console.log(data)).catch(data => console.log(data))
-        }
+        // if (dataA.DateDay.charAt(3) !== "N") {   //ใช้ตอนต้องการ ข้อมูลของการทำนาย
+        //     if (Object.keys(dataA).length < 7)
+        //         axios.post(`http://localhost/api/Predicts`, dataA).then(data => console.log(data)).catch(data => console.log(data))
+        // }
         DataArray.push(dataA);
     })
     useEffect(() => {
