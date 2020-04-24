@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import './scss/App.scss'
-import './css/App.css'
+import './style/scss/App.scss'
+import './style/css/App.css'
 import 'leaflet/dist/leaflet.css'
 import MapView from './components/MapView';
 import ListView from './components/ListView';
@@ -40,7 +40,6 @@ const App = () => {
   const [logined, setLogined] = useState(false);
   const [Islogin, setIslogin] = useState('');
   const [loading, setLoading] = useState(false);
-
   const [name, setName] = useState('');
   const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
