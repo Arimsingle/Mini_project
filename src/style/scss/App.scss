@@ -1,5 +1,5 @@
 @import "./Vars";
-@import "~bulma/bulma.sass";
+// @import "~bulma/bulma.sass";
 // MAP
 .map-view {
     width: 100vw;
@@ -54,9 +54,9 @@
     border-color: #5b1200;
     opacity: 80%;
 }
-// LISTVIEWS
+// LISTVIEWS $white-ter
 .list-view {
-    background-color: $white-ter;
+    background-color: white;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -69,7 +69,7 @@
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px;
 }
 .list-view2 {
-    background-color: $white-ter;
+    background-color: white;
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -106,10 +106,10 @@
     padding: 0px;
     text-align: center;
 }
-
+//$grey-lighter
 .list-view-locations {
     background-color: whitesmoke;
-    border-bottom: 1px solid $grey-lighter;
+    border-bottom: 1px solid black;
     box-shadow: 0.1px 0.1px 1px 0px #fa8208;
     flex-grow: 1;
     position: relative;
@@ -135,12 +135,12 @@
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.03);
-        box-shadow: 0.1px 0.1px 1px 0px $black-ter;
+        box-shadow: 0.1px 0.1px 1px 0px black;
     }
 
     &.selected {
         color: white;
-        background-color: $black-ter;
+        background-color: black;
     }
 
     &.selected .title {
@@ -162,11 +162,11 @@
     }
 
     &:not(:last-child) {
-        border-bottom: 1px solid $grey-lighter;
+        border-bottom: 1px solid black;
     }
     &.selected {
         color: white;
-        background-color: $black-ter;
+        background-color: black;
     }
 
     &.selected .title {
@@ -340,8 +340,9 @@ header{
     .dis-pl{
         margin-right: -800px;
     }
+    //$white-ter
     .list-view {
-        background-color: $white-ter;
+        background-color: white;
         display: flex;
         flex-direction: column;
         position: fixed;
@@ -370,15 +371,15 @@ header{
         &:not(:last-child) {
             border-bottom: 1px solid white;
         }
-    
+    //black
         &:hover {
             background-color: rgba(0, 0, 0, 0.03);
-            box-shadow: 0.1px 0.1px 1px 0px $black-ter;
+            box-shadow: 0.1px 0.1px 1px 0px black;
         }
     
         &.selected {
             color: white;
-            background-color: $black-ter;
+            background-color: black;
         }
     
         &.selected .title {
@@ -400,11 +401,11 @@ header{
         }
     
         &:not(:last-child) {
-            border-bottom: 1px solid $grey-lighter;
+            border-bottom: 1px solid grey;
         }
         &.selected {
             color: white;
-            background-color: $black-ter;
+            background-color: black;
         }
     
         &.selected .title {

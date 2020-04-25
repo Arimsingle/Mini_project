@@ -9,6 +9,7 @@
     "@material-ui/icons": "^4.9.1",
     "@teachablemachine/image": "^0.8.4",
     "@tensorflow/tfjs": "^1.7.3",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
     "autoprefixer": "^9.7.6",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
@@ -30,13 +31,15 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-react-session": "^2.6.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "scss-compile": "^0.1.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "scss": "node-sass — watch scss -o css"
   },
   "eslintConfig": {
     "extends": "react-app"
