@@ -15,7 +15,6 @@ const Linear_regression = (props) => {
     } = props;
     const dataArray2 = dataArray;
     const actionDataArray = bindActionCreators(PredictActions, useDispatch());
-    const [NumberPredict, setNumberPredict] = useState(null);
     let CountDate = [];
     let DataNewConfirmed = [];
     let CountNewConfirmed = [];
@@ -52,13 +51,9 @@ const Linear_regression = (props) => {
         }
 
     });
-    console.log("-----------------------CountNewConfirmed--------------------")
     console.log([...CountNewConfirmed])
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([47,47,47,47,48,49,50,50]);
-    // console.log("-----------------DATA-----------------");
-    // Days.print();
-    // NewConfirmed.print();
+    const NewConfirmed = tf.tensor1d([47, 47, 47, 47, 48, 49, 50, 50]);
     const m = tf.variable(tf.scalar(Math.random()));
     m.print()
     const b = tf.variable(tf.scalar(Math.random()));
@@ -72,9 +67,9 @@ const Linear_regression = (props) => {
         return NewConfirmed.sub(PredictNewConfirmed).square().mean();
     }
     const PredictNewConfirmed_Before = Predict(Days)
-    const LearningRate = 0.0335;
+    const LearningRate = 0.05;
     const optimizer = tf.train.sgd(LearningRate);
-    for (let round = 0; round < 300; round++) {
+    for (let round = 0; round < 100; round++) {
         optimizer.minimize(() => {
             const PredictNewConfirmed = Predict(Days)
             return error(NewConfirmed, PredictNewConfirmed)
@@ -106,7 +101,6 @@ const Linear_regression = (props) => {
     })
     PlotPredictCount.push(...Predict_One);
     let DataArray = [];
-    let oneRound = 0;
     PlotPredictData.map((data, index) => {
         let dataA = { DateDay: data, Deaths: PlotPredictCount[index] };
         // if (dataA.DateDay.charAt(3) !== "N") {   //ใช้ตอนต้องการ ข้อมูลของการทำนาย

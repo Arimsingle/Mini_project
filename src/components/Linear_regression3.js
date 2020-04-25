@@ -73,8 +73,6 @@ const Linear_regression3 = (props) => {
         })
     }
     let PredictNewConfirmed_After = Predict(Days)
-    console.log('#############')
-    error(NewConfirmed, PredictNewConfirmed_After).print()
     let Answer = null;
     let Arr = []
     let Predict_One = [];
@@ -100,7 +98,6 @@ const Linear_regression3 = (props) => {
     })
     PlotPredictCount.push(...Predict_One);
     let DataArray = [];
-    let oneRound = 0;
     PlotPredictData.map((data, index) => {
         let dataA = { DateDay: data, Recovered: PlotPredictCount[index] };
         DataArray.push(dataA);

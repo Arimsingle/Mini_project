@@ -51,9 +51,6 @@ const Linear_regression2 = (props) => {
     console.log(CountNewConfirmed)
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
     const NewConfirmed = tf.tensor1d([2700,2733,2765,2792,2811,2826,2839,2854]);
-    // console.log("-----------------DATA-----------------");
-    // Days.print();
-    // NewConfirmed.print();
     const m = tf.variable(tf.scalar(Math.random()));
     m.print()
     const b = tf.variable(tf.scalar(Math.random()));
@@ -66,11 +63,6 @@ const Linear_regression2 = (props) => {
     const error = (NewConfirmed, PredictNewConfirmed) => {
         return NewConfirmed.sub(PredictNewConfirmed).square().mean();
     }
-    const PredictNewConfirmed_Before = Predict(Days)
-    // console.log("-----------------PREDICT-----------------");
-    // PredictNewConfirmed_Before.print();
-    // console.log("-----------------ERROR-----------------");
-    // error(NewConfirmed, PredictNewConfirmed_Before).print();
     const LearningRate = 0.0444;
     const optimizer = tf.train.sgd(LearningRate);
     for (let round = 0; round < 300; round++) {
@@ -79,12 +71,6 @@ const Linear_regression2 = (props) => {
             return error(NewConfirmed, PredictNewConfirmed)
         })
     }
-    const PredictNewConfirmed_After = Predict(Days)
-    // console.log("-----------------PREDICT-----------------");
-    // PredictNewConfirmed_After.toInt().print();
-    // console.log("-----------------ERROR-----------------");
-    // error(NewConfirmed, PredictNewConfirmed_After).print();
-    // PredictNewConfirmed_After.data().then(data => console.log(data));
     let Answer = null;
     let Arr = []
     let Predict_One = [];
@@ -109,10 +95,7 @@ const Linear_regression2 = (props) => {
         PlotPredictData.push(str);
     })
     PlotPredictCount.push(...Predict_One);
-    // console.log(PlotPredictCount);
-    // console.log(PlotPredictData);
     let DataArray = [];
-    let oneRound = 0;
     PlotPredictData.map((data, index) => {
         let dataA = { DateDay: data, Confirmed: PlotPredictCount[index] };
         // if (dataA.DateDay.charAt(3) !== "N")

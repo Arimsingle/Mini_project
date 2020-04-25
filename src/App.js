@@ -26,7 +26,6 @@ import { firestore } from './index'
 import Camera from './components/Camera'
 import ImgNormal from './photo/IM-0001-0001.jpeg'
 import ImgIn from './photo/person100_bacteria_475.jpeg'
-import Test from './components/Test'
 const App = () => {
   const actionApi = bindActionCreators(apiAction, useDispatch());
   const apiActionTHTD = bindActionCreators(apiAction_TH_TD, useDispatch());
@@ -60,7 +59,7 @@ const App = () => {
     apiActionTHTD.getAPiCovid_TH_TD();
     apiReducerTHPV.getAPiCovid_TH_PV();
     apiActionTHGD.getAPiCovid_TH_GD();
-    Session();  
+    Session();
   }, [])
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
@@ -132,9 +131,13 @@ const App = () => {
   }
   const ToHome = (
     <div className="bg-listbar2">
-      <div className="details-view-close-listbar2" href="#home"><div className="s-v-g">
-        <AnchorLink href="#home" className="text-dark"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path></svg></AnchorLink>
-      </div>
+      <div className="details-view-close-listbar2" href="#home">
+        <div className="s-v-g">
+          <AnchorLink href="#home" className="text-dark">
+            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-up" class="svg-inline--fa fa-angle-up fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z"></path>
+            </svg>
+          </AnchorLink>
+        </div>
       </div>
     </div>
   )
@@ -191,7 +194,7 @@ const App = () => {
     <div>
       <Modal show={showWorld} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Api World</Modal.Title>
+          <Modal.Title>API WORLD</Modal.Title>
         </Modal.Header>
         <Modal.Body>https://coronavirus-tracker-api.herokuapp.com/v2/locations</Modal.Body>
         <Modal.Footer>
@@ -206,7 +209,7 @@ const App = () => {
     <div>
       <Modal show={showWorld2} onHide={handleClose2}>
         <Modal.Header closeButton>
-          <Modal.Title>Api World</Modal.Title>
+          <Modal.Title>API THAILAND</Modal.Title>
         </Modal.Header>
         <Modal.Body>https://covid19.th-stat.com/api/open/cases/sum</Modal.Body>
         <Modal.Footer>
@@ -381,8 +384,8 @@ const App = () => {
                 <NavDropdown.Item><AnchorLink href="#Infected-Gender" className="text-dark">Infected Gender</AnchorLink></NavDropdown.Item>
               </NavDropdown>
               <Nav.Link><AnchorLink href="#map-world" className="text-dark">WORLD</AnchorLink></Nav.Link>
-              <Nav.Link ><AnchorLink href="#Ai-camera" className="text-dark">AI CAMERA</AnchorLink></Nav.Link>
               <Nav.Link ><AnchorLink href="#linear-regression" className="text-dark">AI PREDICT</AnchorLink></Nav.Link>
+              <Nav.Link ><AnchorLink href="#Ai-camera" className="text-dark">AI CAMERA</AnchorLink></Nav.Link>
             </Nav>
             <Form inline>
               <NavDropdown className="mr-sm-2" title={<span className="text-dark"><img src="https://i.pinimg.com/originals/fb/3f/e7/fb3fe7a71631c34341ea4ccb98cf24b3.png" alt="Photo has problem" width="30px" className="rounded-circle" />{Islogin.toUpperCase()}</span>} id="basic-nav-dropdown">
@@ -398,7 +401,6 @@ const App = () => {
         </Navbar>
 
       </div>
-      {/* </header> */}
       <div>
         <div className="box-ct">
           <div className="div-box2">
@@ -408,7 +410,7 @@ const App = () => {
                   <div>
                     <img className="Background_One" src={Background_One} />
                   </div>
-                  <h3><strong style={{ color: "#00c2ff" }}>React.JS</strong><br />Corona Virus Status World and ThaiLand</h3>
+                  <h3><strong style={{ color: "#00c2ff" }}>React.JS</strong><br />Corona Virus Status World and Thailand</h3>
                 </div>
                 <br />
                 <p className="text-justify">
@@ -435,7 +437,7 @@ const App = () => {
         </div>
         <div id="thailand">
           <div className="bd-smr"></div>
-          <h3 className="text-smr">ThaiLand Status Today</h3>
+          <h3 className="text-smr">Thailand Status Today</h3>
           <div className="d-flex justify-content-center">
             <Sub_Chart Api_TH_Today={Api_TH_Today} Api_THGn={Api_THGn} />
           </div>
@@ -456,7 +458,7 @@ const App = () => {
             <h5 style={{ color: "#818a91" }}>กล้องอัจฉริยะที่สามารถตรวจคนติดเชื้อโควิค19 ด้วยภาพ X-RAY</h5>
           </div>
           <div className="d-flex justify-content-center">
-            <h6 style={{ color: "#818a91" }}>ตัวอย่างรูปภาพ</h6>
+            <h6 style={{ color: "#818a91" }}>ตัวอย่างรูปภาพ<a href="https://drive.google.com/drive/folders/1viNXjyE5Nc7MBWzYwTi_KMA6XqGtA-uG?usp=sharing" target='_blank'> Link</a></h6>
           </div>
           <div className="d-flex justify-content-center">
             <Figure>
