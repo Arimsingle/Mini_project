@@ -61,6 +61,7 @@ const App = () => {
     apiReducerTHPV.getAPiCovid_TH_PV();
     apiActionTHGD.getAPiCovid_TH_GD();
     Session();
+    handleShow5();    
   }, [])
   const onSelectedKey = useCallback((key) => {
     if (key === 'confirmed') {
@@ -168,6 +169,10 @@ const App = () => {
   const [showWorld4, setShowWorld4] = useState(false);
   const handleClose4 = () => setShowWorld4(false);
   const handleShow4 = () => setShowWorld4(true);
+
+  const [showWorld5, setShowWorld5] = useState(false);
+  const handleClose5 = () => setShowWorld5(false);
+  const handleShow5 = () => setShowWorld5(true);
   const [getData, setGetData] = useState({});
   const Session = () => {
     firebase.auth().onAuthStateChanged(function (user) {
@@ -189,6 +194,21 @@ const App = () => {
       console.log(error)
     ])
   }
+  const ModalAlert = (
+    <div>
+      <Modal show={showWorld5} onHide={handleClose5}>
+        <Modal.Header closeButton>
+          <Modal.Title>Api World</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>แนะนำเปิดกับ Microsoft Edge เพื่อให้เห็นประสิทธิภาพสูงสุด</Modal.Body>
+        <Modal.Footer>
+          <Button variant="outline-danger" onClick={handleClose5}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </div>
+  )
   const ModalAlertWorld = (
     <div>
       <Modal show={showWorld} onHide={handleClose}>
@@ -367,6 +387,7 @@ const App = () => {
     <div id="home">
       {ModalShow}
       {ProfileData}
+      {ModalAlert}
       <div>
         <div>{ToHome}</div>
         <Navbar bg="light" expand="lg">

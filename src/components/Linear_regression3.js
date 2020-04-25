@@ -50,7 +50,7 @@ const Linear_regression3 = (props) => {
     });
     console.log(CountNewConfirmed)
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([1689, 1787, 1928, 1999, 2108, 2352, 2430, 2490]);
+    const NewConfirmed = tf.tensor1d([1689,1787,1928,1999,2108,2352,2430,2490]);
     const m = tf.variable(tf.scalar(Math.random()));
     m.print()
     const b = tf.variable(tf.scalar(Math.random()));
@@ -64,7 +64,7 @@ const Linear_regression3 = (props) => {
         return NewConfirmed.sub(PredictNewConfirmed).square().mean();
     }
     const PredictNewConfirmed_Before = Predict(Days)
-    const LearningRate = 0.03333;
+    const LearningRate = 0.0335;
     const optimizer = tf.train.sgd(LearningRate);
     for (let round = 0; round < 300; round++) {
         optimizer.minimize(() => {

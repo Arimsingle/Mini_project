@@ -55,7 +55,7 @@ const Linear_regression = (props) => {
     console.log("-----------------------CountNewConfirmed--------------------")
     console.log([...CountNewConfirmed])
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([47, 47, 47, 47, 48, 49, 50, 50]);
+    const NewConfirmed = tf.tensor1d([47,47,47,47,48,49,50,50]);
     // console.log("-----------------DATA-----------------");
     // Days.print();
     // NewConfirmed.print();
