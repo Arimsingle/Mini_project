@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SignupForm from './SignupForm';
-import { Form, Button, Card } from 'react-bootstrap';
+import { Form, Button, Card, Modal } from 'react-bootstrap';
 import Wellcome from '../svg/undraw_welcome_cats_thqn.svg'
 import Backgroud from '../svg/undraw_researching_22gp.svg'
 import * as firebase from 'firebase';
 const DisplayLogin = (props) => {
-    const { setLogined, logined ,setGetData} = props;
+    const { setLogined, logined, setGetData } = props;
     const [disSignup, setDisSignup] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,6 +19,27 @@ const DisplayLogin = (props) => {
             console.log(errorCode, errorMessage)
         });
     }
+    const [showWorld5, setShowWorld5] = useState(false);
+    const handleClose5 = () => setShowWorld5(false);
+    const handleShow5 = () => setShowWorld5(true);
+    useEffect(() => {
+        handleShow5();
+    }, [])
+    const ModalAlert = (
+        <div>
+            <Modal show={showWorld5} onHide={handleClose5}>
+                <Modal.Header closeButton>
+                    <Modal.Title>คำแนะนำ</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>แนะนำเปิดกับ Microsoft Edge เพื่อให้เห็นประสิทธิภาพสูงสุด</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-danger" onClick={handleClose5}>
+                        Close
+              </Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
     const DisLogin = (
         <div className="box-login">
             <div className="d-flex justify-content-center">
@@ -64,6 +85,7 @@ const DisplayLogin = (props) => {
     )
     return (
         <div>
+            {ModalAlert}
             {!disSignup && DisLogin}
             {disSignup && <SignupForm setDisSignup={setDisSignup} />}
         </div>

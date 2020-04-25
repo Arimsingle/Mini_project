@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { firestore } from '../index'
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Modal } from 'react-bootstrap';
 import * as firebase from 'firebase';
 const LoginForm = (props) => {
     useEffect(() => {
@@ -59,6 +59,7 @@ const LoginForm = (props) => {
     }
     return (
         <div className="d-flex justify-content-center">
+            {ModalAlert}
             <Form style={{ width: "300px" }}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
