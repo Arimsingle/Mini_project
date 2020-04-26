@@ -22,13 +22,11 @@ const SignupForm = (props) => {
     const Data_firebase = () => {
         firestore.collection('Users').onSnapshot((snapshot) => {
             let tasksfirebase = snapshot.docs.map(data => {
-                console.log(data.data())
                 return data.data().email
             })
             setDataArray(tasksfirebase)
         })
     }
-    console.log(dataArray)
     let pass = false;
     const SignUPUsers = () => {
         dataArray.map((data, index) => {

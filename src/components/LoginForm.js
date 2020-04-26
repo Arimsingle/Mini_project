@@ -34,13 +34,11 @@ const LoginForm = (props) => {
     const Data_firebase = () => {
         firestore.collection('Users').onSnapshot((snapshot) => {
             let tasksfirebase = snapshot.docs.map(data => {
-                console.log(data.data());
             })
         })
     }
     const Session = () => {
         firebase.auth().onAuthStateChanged(function (user) {
-            console.log("############")
             if (user) {
                 setLogined({
                     isLoggedIn: true,
