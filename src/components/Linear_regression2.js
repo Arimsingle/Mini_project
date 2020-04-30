@@ -50,7 +50,7 @@ const Linear_regression2 = (props) => {
     });
     console.log(CountNewConfirmed)
     const Days = tf.tensor1d([0, 1, 2, 3, 4, 5, 6, 7]);
-    const NewConfirmed = tf.tensor1d([2765, 2792, 2811, 2826, 2839, 2854, 2907, 2922]);
+    const NewConfirmed = tf.tensor1d([2826, 2839, 2854, 2907, 2922, 2931, 2938, 2947]);
     const m = tf.variable(tf.scalar(Math.random()));
     m.print()
     const b = tf.variable(tf.scalar(Math.random()));
