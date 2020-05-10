@@ -34,7 +34,7 @@ const SignupForm = (props) => {
                 pass = true;
             }
         })
-        if (email.length >= 6 && password >= 6 && name !== '' && lastname !== '' && age !== '' && province !== '') {
+        if (email.length >= 6 && password.length >= 6 && name !== '' && lastname !== '' && age !== '' && province !== '') {
             if (!pass) {
                 firestore.collection('Users').doc(email).set({ name, lastname, email, password, male, female, age, province }).catch((error) => {
                     console.log(error);
